@@ -1,0 +1,167 @@
+<ion-content class="home-content">
+
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-header">
+      <div class="brand">
+        <div class="logo-circle">
+          <img src="assets/img/logoClinica.png" alt="Logo">
+        </div>
+        <div class="app-text">
+          <span class="name">Bem Estar</span>
+          <span class="sub">Saúde</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <h2>{{ saudacao }},</h2>
+      <h1>{{ nome || 'Paciente' }}</h1>
+      <p>Cuide da sua saúde com praticidade</p>
+    </div>
+  </div>
+
+  <!-- Quick Actions Grid -->
+  <div class="actions-container">
+    <div class="actions-grid">
+
+      <button class="action-card" routerLink="/tabs/agendar-consulta">
+        <div class="icon-wrapper blue">
+          <ion-icon name="medkit-outline"></ion-icon>
+        </div>
+        <span>Agendar Consulta</span>
+      </button>
+
+      <button class="action-card" routerLink="/tabs/medicos">
+        <div class="icon-wrapper green">
+          <ion-icon name="document-text-outline"></ion-icon>
+        </div>
+        <span>Médicos</span>
+      </button>
+
+      <button class="action-card" routerLink="/tabs/especialidades">
+        <div class="icon-wrapper purple">
+          <ion-icon name="calendar-outline"></ion-icon>
+        </div>
+        <span>Especialidades</span>
+      </button>
+
+      <button class="action-card" routerLink="/tabs/consulta">
+        <div class="icon-wrapper orange">
+          <ion-icon name="time-outline"></ion-icon>
+        </div>
+        <span>Histórico</span>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Institutional Section -->
+  <div class="section-container">
+    <h3 class="section-title">Institucional</h3>
+
+    <!-- Badges Navigation -->
+    <div class="badges-container">
+      <ion-badge [class.active]="secaoAtiva === 'sobre'" (click)="selecionarSecao('sobre')">Sobre a Clínica</ion-badge>
+      <ion-badge [class.active]="secaoAtiva === 'missao'" (click)="selecionarSecao('missao')">Missão</ion-badge>
+      <ion-badge [class.active]="secaoAtiva === 'valores'" (click)="selecionarSecao('valores')">Valores</ion-badge>
+      <ion-badge [class.active]="secaoAtiva === 'objetivos'"
+        (click)="selecionarSecao('objetivos')">Objetivos</ion-badge>
+      <ion-badge [class.active]="secaoAtiva === 'contato'" (click)="selecionarSecao('contato')">Contato</ion-badge>
+    </div>
+
+    <!-- Content Area -->
+    <div [ngSwitch]="secaoAtiva" class="institutional-content">
+
+      <!-- Sobre a Clínica -->
+      <div *ngSwitchCase="'sobre'" class="content-card fade-in">
+        <div class="about-card">
+          <div class="about-content">
+            <div class="about-header">
+              <ion-icon name="business-outline"></ion-icon>
+              <h4>Bem Estar Saúde</h4>
+            </div>
+            <img src="assets/img/frenteClinica.png" alt="Frente da Clínica BemEstar Saúde" class="about-image">
+            <p>A Clínica BemEstar Saúde é referência em atendimento humanizado e tecnologia de ponta. Nossa missão é
+              cuidar de você e da sua família com dedicação, oferecendo uma equipe qualificada e infraestrutura completa
+              para o seu bem-estar.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Missão -->
+      <div *ngSwitchCase="'missao'" class="content-card fade-in">
+        <div class="info-card blue-border">
+          <div class="card-header">
+            <ion-icon name="flag-outline" color="primary"></ion-icon>
+            <h4>Nossa Missão</h4>
+          </div>
+          <p>"Oferecer atendimento humanizado, acessível e de qualidade à população, promovendo saúde e bem-estar."</p>
+        </div>
+      </div>
+
+      <!-- Valores -->
+      <div *ngSwitchCase="'valores'" class="content-card fade-in">
+        <div class="info-card blue-border">
+          <div class="card-header">
+            <ion-icon name="diamond-outline" color="primary"></ion-icon>
+            <h4>Nossos Valores</h4>
+          </div>
+          <ul class="values-list">
+            <li><ion-icon name="checkmark-circle-outline" color="success"></ion-icon> Ética</li>
+            <li><ion-icon name="checkmark-circle-outline" color="success"></ion-icon> Humanização</li>
+            <li><ion-icon name="checkmark-circle-outline" color="success"></ion-icon> Compromisso</li>
+            <li><ion-icon name="checkmark-circle-outline" color="success"></ion-icon> Inovação</li>
+            <li><ion-icon name="checkmark-circle-outline" color="success"></ion-icon> Responsabilidade</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Objetivos -->
+      <div *ngSwitchCase="'objetivos'" class="content-card fade-in">
+        <div class="info-card blue-border">
+          <div class="card-header">
+            <ion-icon name="rocket-outline" color="primary"></ion-icon>
+            <h4>Nossos Objetivos</h4>
+          </div>
+          <ul class="objectives-list">
+            <li><ion-icon name="arrow-forward-circle-outline" color="tertiary"></ion-icon> Expandir atendimentos</li>
+            <li><ion-icon name="arrow-forward-circle-outline" color="tertiary"></ion-icon> Melhorar continuamente a
+              qualidade dos serviços</li>
+            <li><ion-icon name="arrow-forward-circle-outline" color="tertiary"></ion-icon> Investir em tecnologia</li>
+            <li><ion-icon name="arrow-forward-circle-outline" color="tertiary"></ion-icon> Garantir satisfação dos
+              pacientes</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Contato -->
+      <div *ngSwitchCase="'contato'" class="content-card fade-in">
+        <div class="info-card blue-border">
+          <div class="card-header">
+            <ion-icon name="call-outline" color="primary"></ion-icon>
+            <h4>Fale Conosco</h4>
+          </div>
+          <div class="contact-info">
+            <div class="contact-item">
+              <ion-icon name="location-outline"></ion-icon>
+              <span>rua 01, Agua branca pb</span>
+            </div>
+            <div class="contact-item">
+              <ion-icon name="call-outline"></ion-icon>
+              <span>879999999</span>
+            </div>
+            <div class="contact-item">
+              <ion-icon name="mail-outline"></ion-icon>
+              <span>bemestarsaude@gmail.com</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="spacer-bottom"></div>
+
+</ion-content>

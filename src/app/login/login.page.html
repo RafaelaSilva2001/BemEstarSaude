@@ -1,0 +1,51 @@
+<ion-content class="login-content">
+  <div class="login-container">
+
+    <!-- Logo + nome da clínica -->
+    <div class="logo-wrapper">
+      <div class="logo-circle">
+        <img src="assets/img/logoClinica.png" alt="Logo da clínica" class="clinic-logo" />
+      </div>
+      <p class="app-title">
+        Bem Estar <span class="app-subtitle">Saúde</span>
+      </p>
+    </div>
+
+    <!-- Campos -->
+    <div class="form-wrapper">
+      <!-- E-mail -->
+      <ion-item lines="none" class="input-item">
+        <ion-input type="email" label="E-mail" label-placement="floating" placeholder="Digite seu e-mail"
+          [(ngModel)]="email">
+        </ion-input>
+      </ion-item>
+
+      <!-- Senha -->
+      <ion-item lines="none" class="input-item">
+        <ion-input label="Senha" label-placement="floating" [type]="mostrarSenha ? 'text' : 'password'"
+          placeholder="Digite sua senha" [(ngModel)]="senha">
+        </ion-input>
+        <ion-icon slot="end" class="password-toggle" [name]="mostrarSenha ? 'eye-off-outline' : 'eye-outline'"
+          (click)="visualizarSenha()">
+        </ion-icon>
+      </ion-item>
+
+      <!-- Botão Entrar -->
+      <ion-button expand="block" class="login-btn" (click)="login()">
+        Entrar
+      </ion-button>
+
+      <!-- Mensagem de erro -->
+      <p class="login-error" *ngIf="mensagemErro">
+        {{ mensagemErro }}
+      </p>
+
+      <!-- Criar conta -->
+      <div class="signup-wrapper">
+        <span>Não possui conta?</span>
+        <a routerLink="/cadastro">Criar conta</a>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

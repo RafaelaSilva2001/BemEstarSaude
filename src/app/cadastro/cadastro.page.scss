@@ -1,0 +1,97 @@
+:host {
+  ion-content {
+    --background: #f4f6fb;
+  }
+
+  --ion-background-color: #f4f6fb;
+  --ion-text-color: #111827;
+}
+
+.header-title {
+  text-align: center;
+  margin-bottom: 24px;
+  margin-top: 20px;
+
+  h1 {
+    font-size: 24px;
+    /* Reduced from 28px */
+    font-weight: 700;
+    color: #1a73e8;
+    margin: 0 0 8px;
+  }
+
+  p {
+    font-size: 14px;
+    /* Reduced from 16px */
+    color: #616161;
+    margin: 0;
+  }
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card principal do formulário */
+.form-card {
+  width: 100%;
+  max-width: 420px;
+  margin: 16px auto;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+/* Espaçamento geral dentro do card */
+ion-card-content {
+  padding: 16px 18px 20px;
+}
+
+ion-item-divider {
+  --background: #f0f2f7;
+  font-weight: 600;
+  font-size: 0.85rem;
+  /* Reduced from 0.9rem */
+  margin-bottom: 8px;
+  margin-top: 4px;
+  border-radius: 8px;
+}
+
+/* Espaçamento entre os itens do formulário */
+ion-card-content ion-item,
+ion-card-content ion-grid {
+  margin-top: 6px;
+}
+
+/* Inputs / selects com visual mais “flat” */
+ion-item {
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+  --min-height: 40px;
+  /* Reduced from 44px */
+  --background: transparent;
+  --ion-item-background: transparent;
+}
+
+
+/* Label em cima do campo (Nome completo, CPF, etc.) */
+ion-input,
+ion-select {
+  --highlight-color-focused: #1a73e8;
+  --color: #111827;
+  font-size: 0.95rem;
+  /* Reduced from 1.1rem */
+  --background: #ffffff;
+}
+
+ion-card {
+  --background: #ffffff;
+}
+
+ion-button {
+  color: #ffffff;
+}

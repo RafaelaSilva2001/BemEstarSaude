@@ -1,0 +1,54 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home" icon="home-outline"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="spec-content">
+
+  <!-- Faixa verde -->
+  <div class="hero">
+    <h2>Especialidades Médicas</h2>
+    <p>Conheça nossas especialidades e áreas de atendimento</p>
+
+    <div class="search-wrap">
+      <ion-searchbar class="hero-search" placeholder="Buscar especialidade..." [(ngModel)]="termoBusca"
+        (ionInput)="filtrar()">
+      </ion-searchbar>
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <h3 class="section-title">Todas as Especialidades</h3>
+
+    <div class="spec-list">
+
+      <button class="spec-card" *ngFor="let esp of especialidadesFiltradas" (click)="abrir(esp)">
+
+        <div class="icon-badge {{ esp.getTipo() }}">
+
+          <!-- AQUI: ícone decidido 100% no HTML -->
+          <ion-icon [name]="
+              esp.getTipo() === 'Cardiologia'   ? 'heart-outline' :
+              esp.getTipo() === 'Neurologia'    ? 'scan-circle-outline' :
+              esp.getTipo() === 'Oftalmologia'  ? 'eye-outline' :
+              esp.getTipo() === 'Ortopedia'     ? 'bandage-outline' :
+              esp.getTipo() === 'Pediatria'     ? 'medkit-outline' :
+                                                  'medkit-outline'
+            ">
+          </ion-icon>
+
+        </div>
+
+        <div class="spec-text">
+          <h4>{{ esp.getNome() }}</h4>
+          <p>{{ esp.getDescricao() }}</p>
+        </div>
+
+      </button>
+    </div>
+  </div>
+</ion-content>

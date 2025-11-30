@@ -1,0 +1,191 @@
+.spec-content {
+  --background: #f8f9fa;
+}
+
+/* HERO SECTION (Topo azul) */
+.hero {
+  background: linear-gradient(135deg, #1e73ff 0%, #155ec2 100%);
+  padding: 24px 20px 40px;
+  /* Reduced padding */
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 32px;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+
+  h2 {
+    margin: 0 0 6px;
+    font-size: 1.3rem;
+    /* Reduced from 1.5rem */
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+
+  p {
+    margin: 0 0 20px;
+    font-size: 0.9rem;
+    /* Reduced from 1rem */
+    opacity: 0.9;
+    font-weight: 400;
+  }
+}
+
+/* SEARCH BAR */
+.search-wrap {
+  margin-top: 8px;
+}
+
+.hero-search {
+  --background: rgba(255, 255, 255, 0.2);
+  --color: #fff;
+  --placeholder-color: rgba(255, 255, 255, 0.7);
+  --icon-color: rgba(255, 255, 255, 0.7);
+  --border-radius: 14px;
+  --box-shadow: none;
+  padding: 0;
+
+  /* Remove default padding from ionic searchbar */
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+
+  /* Adjust input font size if possible, though ionic handles this internally mostly */
+  font-size: 0.9rem;
+}
+
+/* CORPO DA PÁGINA */
+.page-body {
+  margin-top: -30px;
+  /* Overlap effect */
+  padding: 0 20px 40px;
+  position: relative;
+  z-index: 10;
+}
+
+.section-title {
+  font-size: 1rem;
+  /* Reduced from 1.1rem */
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 14px;
+  padding-left: 4px;
+}
+
+/* LISTA */
+.spec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* CARD */
+.spec-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 20px;
+  border: none;
+  padding: 16px;
+  /* Reduced padding */
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+
+  /* Soft shadow */
+  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* CÍRCULO DO ÍCONE */
+.icon-badge {
+  width: 48px;
+  /* Reduced size */
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+
+  ion-icon {
+    font-size: 1.4rem;
+    /* Reduced size */
+  }
+}
+
+/* TEXTO DO CARD */
+.spec-text {
+  flex: 1;
+
+  h4 {
+    font-size: 0.95rem;
+    /* Reduced from 1.05rem */
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 2px;
+  }
+
+  p {
+    font-size: 0.8rem;
+    /* Reduced from 0.9rem */
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.3;
+    font-weight: 500;
+  }
+}
+
+/* CORES por especialidade */
+.icon-badge.Cardiologia {
+  background: #fff1f2;
+
+  ion-icon {
+    color: #f43f5e;
+  }
+}
+
+.icon-badge.Neurologia {
+  background: #f3e8ff;
+
+  ion-icon {
+    color: #9333ea;
+  }
+}
+
+.icon-badge.Oftalmologia {
+  background: #eff6ff;
+
+  ion-icon {
+    color: #1e73ff;
+  }
+}
+
+.icon-badge.Ortopedia {
+  background: #f3f4f6;
+
+  ion-icon {
+    color: #4b5563;
+  }
+}
+
+.icon-badge.Pediatria {
+  background: #fce7f3;
+
+  ion-icon {
+    color: #db2777;
+  }
+}
+
+/* Default fallback */
+.icon-badge {
+  background: #f0fdf4;
+
+  ion-icon {
+    color: #16a34a;
+  }
+}

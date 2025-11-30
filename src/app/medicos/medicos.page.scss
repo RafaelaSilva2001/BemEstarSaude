@@ -1,0 +1,134 @@
+.medicos-content {
+  --background: #f2f4f8;
+}
+
+/* Header styles removed to use global theme */
+
+.top-card {
+  margin: 10px 14px 10px;
+  padding: 14px 14px 12px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #7a2cff 0%, #5a22d9 100%);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(50, 30, 120, 0.28);
+
+  h2 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0 0 2px;
+  }
+
+  p {
+    font-size: 0.78rem;
+    opacity: 0.95;
+    margin: 0 0 10px;
+  }
+
+  .busca-bar {
+    --background: #ffffff;
+    --color: #333;
+    --placeholder-color: #888;
+    border-radius: 10px;
+    height: 38px;
+    padding: 0;
+    margin-top: 4px;
+  }
+}
+
+.medicos-content {
+  ion-item-divider {
+    --background: transparent;
+    --color: #333;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 4px 16px 2px;
+    margin-top: 4px;
+    margin-bottom: 2px;
+  }
+}
+
+.lista-medicos {
+  padding: 4px 12px 16px;
+}
+
+.medico-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 10px 10px 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.06);
+
+  .medico-card-topo {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  .medico-foto {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid #f0f0f0;
+  }
+
+  .medico-info {
+    flex: 1;
+
+    .medico-nome h3 {
+      font-size: 0.9rem;
+      font-weight: 800;
+      margin: 0;
+      color: #222;
+    }
+
+    .medico-especialidade p {
+      font-size: 0.75rem;
+      color: #666;
+      margin: 1px 0 4px;
+    }
+
+    .crm p {
+      font-size: 0.68rem;
+      color: #888;
+      margin: 0;
+    }
+  }
+
+  /* container do status */
+  .status {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  /* badge base (ion-badge) */
+  .badge-status {
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    text-transform: none;
+  }
+
+  /* botão roxo “Agendar Consulta” */
+  .btn-agendar {
+    margin-top: 8px;
+    height: 34px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    --background: #7a2cff;
+    --background-hover: #6a22ea;
+    --border-radius: 10px;
+    text-transform: none;
+  }
+
+  /* visual quando o botão estiver desabilitado (médico indisponível) */
+  .btn-agendar[disabled] {
+    --background: #cccccc;
+    --background-hover: #cccccc;
+    opacity: 0.85;
+  }
+}

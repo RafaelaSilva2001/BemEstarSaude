@@ -1,0 +1,147 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home" icon="home-outline"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="relatorio-content">
+  <div class="relatorio-wrapper">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <h2>Relatório de Consultas</h2>
+      <p>Acompanhe todo seu histórico médico em um só lugar</p>
+    </section>
+
+    <!-- Carregando -->
+    <ng-container *ngIf="carregando">
+      <div class="loading-container">
+        <ion-spinner></ion-spinner>
+        <p>Carregando consultas...</p>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!carregando">
+
+      <!-- MINHAS CONSULTAS -->
+      <h3 class="lista-header">Minhas Consultas ({{ minhasConsultas.length }})</h3>
+
+      <div *ngIf="minhasConsultas.length === 0" class="sem-consultas">
+        <p>Você ainda não possui consultas agendadas.</p>
+      </div>
+
+      <section class="lista-consultas" *ngIf="minhasConsultas.length > 0">
+        <ion-card *ngFor="let consulta of minhasConsultas" class="consulta-card">
+          <ion-card-content>
+
+            <div class="consulta-card-header">
+              <div class="badges">
+                <span class="consulta-badge consulta-badge--agendada" *ngIf="consulta.getStatus() === 'Agendada'">
+                  Agendada
+                </span>
+                <span class="consulta-badge consulta-badge--cancelada" *ngIf="consulta.getStatus() === 'Cancelada'">
+                  Cancelada
+                </span>
+              </div>
+
+              <div class="consulta-actions">
+                <ion-button *ngIf="consulta.getStatus() === 'Agendada'" fill="clear" size="small" class="cancel-btn"
+                  (click)="confirmarCancelamento(consulta)">
+                  <ion-icon name="close-circle-outline"></ion-icon>
+                </ion-button>
+
+                <ion-button fill="clear" size="small" class="delete-btn" (click)="confirmarExclusao(consulta)">
+                  <ion-icon name="trash-outline"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+
+            <h3 class="consulta-especialidade">
+              {{ consulta.getEspecialidade() }}
+            </h3>
+            <p class="consulta-medico">
+              {{ consulta.getMedico() }}
+            </p>
+
+            <div class="consulta-meta">
+              <div>
+                <ion-icon name="calendar-outline"></ion-icon>
+                <span>{{ formatarDataConsulta(consulta.getDataConsulta()) }}</span>
+              </div>
+              <div>
+                <ion-icon name="time-outline"></ion-icon>
+                <span>{{ consulta.getHorarioConsulta() }}</span>
+              </div>
+            </div>
+
+            <div class="consulta-paciente">
+              <p>Paciente: {{ consulta.getNomePaciente() }}</p>
+            </div>
+
+          </ion-card-content>
+        </ion-card>
+      </section>
+
+      <!-- OUTRAS CONSULTAS -->
+      <ng-container *ngIf="outrasConsultas.length > 0">
+        <h3 class="lista-header" style="margin-top: 32px;">Outras Consultas ({{ outrasConsultas.length }})</h3>
+
+        <section class="lista-consultas">
+          <ion-card *ngFor="let consulta of outrasConsultas" class="consulta-card">
+            <ion-card-content>
+
+              <div class="consulta-card-header">
+                <div class="badges">
+                  <span class="consulta-badge consulta-badge--agendada" *ngIf="consulta.getStatus() === 'Agendada'">
+                    Agendada
+                  </span>
+                  <span class="consulta-badge consulta-badge--cancelada" *ngIf="consulta.getStatus() === 'Cancelada'">
+                    Cancelada
+                  </span>
+                </div>
+
+                <div class="consulta-actions">
+                  <ion-button *ngIf="consulta.getStatus() === 'Agendada'" fill="clear" size="small" class="cancel-btn"
+                    (click)="confirmarCancelamento(consulta)">
+                    <ion-icon name="close-circle-outline"></ion-icon>
+                  </ion-button>
+
+                  <ion-button fill="clear" size="small" class="delete-btn" (click)="confirmarExclusao(consulta)">
+                    <ion-icon name="trash-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </div>
+
+              <h3 class="consulta-especialidade">
+                {{ consulta.getEspecialidade() }}
+              </h3>
+              <p class="consulta-medico">
+                {{ consulta.getMedico() }}
+              </p>
+
+              <div class="consulta-meta">
+                <div>
+                  <ion-icon name="calendar-outline"></ion-icon>
+                  <span>{{ formatarDataConsulta(consulta.getDataConsulta()) }}</span>
+                </div>
+                <div>
+                  <ion-icon name="time-outline"></ion-icon>
+                  <span>{{ consulta.getHorarioConsulta() }}</span>
+                </div>
+              </div>
+
+              <div class="consulta-paciente">
+                <p><strong>Paciente:</strong> {{ consulta.getNomePaciente() }}</p>
+              </div>
+
+            </ion-card-content>
+          </ion-card>
+        </section>
+      </ng-container>
+
+    </ng-container>
+
+  </div>
+</ion-content>

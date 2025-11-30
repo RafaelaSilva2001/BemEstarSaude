@@ -1,0 +1,59 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home" icon="home-outline"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="medicos-content">
+
+  <!-- Card roxo topo -->
+  <div class="top-card">
+    <h2>Nossos Médicos</h2>
+    <p>Profissionais qualificados e experientes à sua disposição</p>
+
+    <ion-searchbar placeholder="Buscar médico ou especialidade..." [(ngModel)]="textoBusca"
+      (ionInput)="filtrarMedicos()" class="busca-bar">
+    </ion-searchbar>
+  </div>
+
+  <ion-item-divider>Disponíveis para Consulta</ion-item-divider>
+
+  <!-- lista de médicos -->
+  <div class="lista-medicos">
+    <div class="medico-card" *ngFor="let medico of medicosFiltrados">
+      <div class="medico-card-topo">
+        <img [src]="medico.foto" class="medico-foto" />
+
+        <div class="medico-info">
+          <ion-text class="medico-nome">
+            <h3>{{ medico.nome }}</h3>
+          </ion-text>
+
+          <ion-text class="medico-especialidade">
+            <p>{{ medico.especialidade }}</p>
+          </ion-text>
+
+          <ion-text class="crm">
+            <p>CRM {{ medico.crm }}</p>
+          </ion-text>
+        </div>
+
+        <div class="status">
+          <ion-badge class="badge-status" [color]="estiloStatus(medico.status)">
+            {{ medico.status }}
+          </ion-badge>
+        </div>
+      </div>
+
+      <!-- botão fica dentro do card, mas fora do topo -->
+      <ion-button expand="block" class="btn-agendar" routerLink="/tabs/agendar-consulta"
+        [disabled]="medico.status === 'Indisponível'">
+        Agendar Consulta
+      </ion-button>
+
+    </div>
+  </div>
+
+</ion-content>

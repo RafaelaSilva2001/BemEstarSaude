@@ -1,0 +1,205 @@
+<ion-header class="perfil-header">
+  <ion-toolbar>
+    <div class="perfil-top-row">
+      <ion-title>Meu Perfil</ion-title>
+      <ion-button fill="clear" (click)="abrirModalEdicao()">
+        <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+
+    <div class="perfil-user">
+      <!-- Input de arquivo oculto -->
+      <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+
+      <div class="avatar-wrapper" (click)="triggerFileInput()">
+        <img [src]="foto || 'assets/img/fotoPerfil.jpeg'" alt="Foto do paciente" />
+        <div class="avatar-badge">
+          <ion-icon name="camera-outline"></ion-icon>
+        </div>
+      </div>
+
+      <div class="perfil-user-text">
+        <h2>{{ nome || 'Paciente' }}</h2>
+        <p>Toque na foto para alterar</p>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="perfil-content">
+  <div class="perfil-container">
+
+    <h2 class="section-title">Informações Pessoais</h2>
+
+    <div class="info-card">
+
+      <div class="info-item">
+        <div class="info-icon">
+          <ion-icon name="person-outline"></ion-icon>
+        </div>
+        <div class="info-text">
+          <span class="info-label">Nome Completo</span>
+          <span class="info-value">{{ nome }}</span>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="info-icon">
+          <ion-icon name="card-outline"></ion-icon>
+        </div>
+        <div class="info-text">
+          <span class="info-label">CPF</span>
+          <span class="info-value">{{ formatarCpf(cpf) }}</span>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="info-icon">
+          <ion-icon name="calendar-outline"></ion-icon>
+        </div>
+        <div class="info-text">
+          <span class="info-label">Data de Nascimento</span>
+          <span class="info-value">{{ formatarData(dataNascimento) }}</span>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="info-icon">
+          <ion-icon name="mail-outline"></ion-icon>
+        </div>
+        <div class="info-text">
+          <span class="info-label">E-mail</span>
+          <span class="info-value">{{ email }}</span>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="info-icon">
+          <ion-icon name="male-female-outline"></ion-icon>
+        </div>
+        <div class="info-text">
+          <span class="info-label">Gênero</span>
+          <span class="info-value">{{ genero }}</span>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="info-icon">
+          <ion-icon name="location-outline"></ion-icon>
+        </div>
+        <div class="info-text">
+          <span class="info-label">Endereço</span>
+          <span class="info-value">{{ endereco }}</span>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="btn-sair" (click)="logout()">
+      <ion-icon name="log-out-outline"></ion-icon>
+      <span>Sair da Conta</span>
+    </button>
+
+  </div>
+
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="fecharModal()" class="edit-modal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Editar Perfil</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="fecharModal()">Fechar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding modal-content">
+
+        <div class="form-group">
+          <ion-item lines="none" class="custom-input">
+            <ion-label position="stacked">Nome Completo</ion-label>
+            <ion-input [(ngModel)]="editNome" type="text"></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <ion-item lines="none" class="custom-input">
+            <ion-label position="stacked">CPF</ion-label>
+            <ion-input [(ngModel)]="editCpf" type="text" readonly="true" disabled="true"></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <ion-item lines="none" class="custom-input">
+            <ion-label position="stacked">Data de Nascimento</ion-label>
+            <ion-input [(ngModel)]="editDataNascimento" type="text" (ionInput)="mascaraDataNasc($event)" maxlength="10"
+              placeholder="DD/MM/AAAA"></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <ion-item lines="none" class="custom-input">
+            <ion-label position="stacked">Gênero</ion-label>
+            <ion-select [(ngModel)]="editGenero" interface="popover">
+              <ion-select-option value="Masculino">Masculino</ion-select-option>
+              <ion-select-option value="Feminino">Feminino</ion-select-option>
+              <ion-select-option value="Outro">Outro</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <ion-item lines="none" class="custom-input">
+            <ion-label position="stacked">E-mail</ion-label>
+            <ion-input [(ngModel)]="editEmail" type="email"></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <ion-item lines="none" class="custom-input">
+            <ion-label position="stacked">CEP</ion-label>
+            <ion-input [(ngModel)]="editCep" type="text" (ionInput)="mascaraCEP($event)" maxlength="9"></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <ion-item lines="none" class="custom-input">
+            <ion-label position="stacked">Logradouro</ion-label>
+            <ion-input [(ngModel)]="editLogradouro" type="text"></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <ion-item lines="none" class="custom-input">
+            <ion-label position="stacked">Número</ion-label>
+            <ion-input [(ngModel)]="editNumero" type="text"></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <ion-item lines="none" class="custom-input">
+            <ion-label position="stacked">Bairro</ion-label>
+            <ion-input [(ngModel)]="editBairro" type="text"></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <ion-item lines="none" class="custom-input">
+            <ion-label position="stacked">Cidade</ion-label>
+            <ion-input [(ngModel)]="editCidade" type="text"></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <ion-item lines="none" class="custom-input">
+            <ion-label position="stacked">Estado</ion-label>
+            <ion-input [(ngModel)]="editEstado" type="text" maxlength="2"></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="ion-padding-top">
+          <ion-button expand="block" shape="round" (click)="salvarEdicao()">Salvar Alterações</ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

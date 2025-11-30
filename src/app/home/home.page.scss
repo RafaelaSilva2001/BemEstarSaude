@@ -1,0 +1,344 @@
+.home-content {
+    --background: #f8f9fa;
+
+    /* HERO SECTION */
+    .hero-section {
+        background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+        padding: 20px 24px 80px;
+        /* Extra bottom padding for overlap */
+        border-bottom-left-radius: 32px;
+        border-bottom-right-radius: 32px;
+        color: #fff;
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .logo-circle {
+                width: 40px;
+                height: 40px;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 50%;
+                padding: 6px;
+                display: grid;
+                place-items: center;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                }
+            }
+
+            .app-text {
+                display: flex;
+                flex-direction: column;
+                line-height: 1.1;
+
+                .name {
+                    font-weight: 700;
+                    font-size: 1rem;
+                }
+
+                .sub {
+                    font-size: 0.75rem;
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+
+    .hero-content {
+        h2 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 4px 0 8px;
+        }
+
+        p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin: 0;
+            font-weight: 400;
+        }
+    }
+
+    /* ACTIONS GRID */
+    .actions-container {
+        padding: 0 20px;
+        margin-top: -50px;
+        /* Overlap hero */
+        position: relative;
+        z-index: 10;
+    }
+
+    .actions-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .action-card {
+        background: #ffffff;
+        border: none;
+        border-radius: 20px;
+        padding: 24px 16px;
+        min-height: 130px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        transition: transform 0.2s;
+        cursor: pointer;
+
+        &:active {
+            transform: scale(0.98);
+        }
+
+        .icon-wrapper {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+
+            ion-icon {
+                font-size: 28px;
+                color: #fff;
+            }
+
+            &.blue {
+                background: #3b82f6;
+            }
+
+            &.green {
+                background: #10b981;
+            }
+
+            &.purple {
+                background: #a855f7;
+            }
+
+            &.orange {
+                background: #f97316;
+            }
+        }
+
+        span {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #374151;
+            text-align: center;
+            line-height: 1.3;
+        }
+    }
+
+    /* SECTIONS */
+    .section-container {
+        padding: 24px 20px 0;
+    }
+
+    .section-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 0 0 16px;
+    }
+
+    /* INSTITUTIONAL SECTION */
+    .badges-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        padding-bottom: 20px;
+
+        ion-badge {
+            --background: #f1f5f9;
+            --color: #64748b;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 24px;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+
+            &.active {
+                --background: #1e88e5;
+                --color: #fff;
+                box-shadow: 0 4px 12px rgba(30, 136, 229, 0.3);
+                transform: translateY(-2px);
+            }
+        }
+    }
+
+    .institutional-content {
+        min-height: 250px;
+        /* Prevent layout shift */
+    }
+
+    .content-card {
+        animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .info-card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+        &.blue-border {
+            border-left: 4px solid #1e88e5;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+
+            ion-icon {
+                font-size: 24px;
+            }
+
+            h4 {
+                margin: 0;
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: #333;
+            }
+        }
+
+        p {
+            color: #555;
+            line-height: 1.6;
+            margin: 0;
+        }
+    }
+
+    /* LISTS STYLES */
+    .values-list,
+    .objectives-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #444;
+            font-size: 0.95rem;
+
+            ion-icon {
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+    /* CONTACT STYLES */
+    .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #444;
+
+            ion-icon {
+                color: #1e88e5;
+                font-size: 1.2rem;
+            }
+
+            span {
+                font-size: 0.95rem;
+            }
+        }
+    }
+
+    /* REUSED ABOUT CARD STYLES */
+    .about-card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 20px;
+        color: #444;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        border-left: 4px solid #1e88e5;
+
+        .about-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+
+            ion-icon {
+                font-size: 24px;
+                color: #1e88e5;
+            }
+
+            h4 {
+                margin: 0;
+                font-size: 1.05rem;
+                font-weight: 700;
+                color: #333;
+            }
+        }
+
+        p {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+    }
+
+    .spacer-bottom {
+        height: 40px;
+    }
+}
