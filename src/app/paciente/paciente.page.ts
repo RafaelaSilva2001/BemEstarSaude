@@ -18,7 +18,7 @@ export class PacientePage {
   cpf: string = '';
   genero: string = '';
   endereco: string = '';
-  foto: string = ''; // Base64 da foto
+  foto: string = ''; 
 
   private cadastroCRUD: CadastroCRUD;
 
@@ -42,7 +42,7 @@ export class PacientePage {
     this.email = cadastro.getEmail();
     this.cpf = cadastro.getCpf();
     this.genero = cadastro.getGenero();
-    this.foto = cadastro.getFoto(); // Carrega a foto
+    this.foto = cadastro.getFoto();
 
     const partesEndereco: string[] = [];
 
@@ -131,7 +131,6 @@ export class PacientePage {
     }
   }
 
-
   // Editar informações do paciente
   isModalOpen = false;
   editNome = '';
@@ -197,7 +196,7 @@ export class PacientePage {
       this.editCidade,
       this.editEstado,
       this.editCep,
-      this.foto // Mantém a foto atual
+      this.foto 
     );
 
     await this.cadastroCRUD.salvarCadastro(novoCadastro);
@@ -205,7 +204,7 @@ export class PacientePage {
     this.fecharModal();
   }
 
-  // Máscaras (reutilizadas do cadastro, idealmente estariam em um utilitário)
+  // Máscaras (reutilizadas do cadastro)
   mascaraCPF(event: any) {
     let value: string = event.detail.value || '';
     value = value.replace(/\D/g, '').substring(0, 11);
