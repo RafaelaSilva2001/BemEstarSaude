@@ -19,6 +19,7 @@ export class CadastroPage {
   dataNascimento = '';
   genero = '';
   senha = '';
+  foto = '';
 
   logradouro = '';
   numero = '';
@@ -64,7 +65,8 @@ export class CadastroPage {
       this.bairro,
       this.cidade,
       this.estado,
-      this.cep
+      this.cep,
+      this.foto
     );
 
     await this.cadastroCRUD.salvarCadastro(cadastro);
@@ -123,6 +125,17 @@ export class CadastroPage {
     }
 
     this.dataNascimento = value;
+  }
+
+  selecionarFoto(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.foto = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
 }

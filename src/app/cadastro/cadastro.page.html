@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/login"></ion-back-button>
+      <ion-back-button slot="start" defaultHref="/login" text=""></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -16,6 +16,24 @@
 
     <ion-card class="form-card">
       <ion-card-content>
+
+        <ion-item-divider>
+          <ion-label>Foto de Perfil</ion-label>
+        </ion-item-divider>
+
+        <ion-item lines="none" class="photo-upload-item">
+          <div class="photo-upload-container">
+            <div class="photo-preview" *ngIf="foto" [style.background-image]="'url(' + foto + ')'"></div>
+            <div class="photo-placeholder" *ngIf="!foto">
+              <ion-icon name="person-circle-outline"></ion-icon>
+            </div>
+            <input type="file" (change)="selecionarFoto($event)" accept="image/*" id="file-input" hidden>
+            <label for="file-input" class="upload-btn">
+              <ion-icon name="camera-outline"></ion-icon>
+              Escolher Foto
+            </label>
+          </div>
+        </ion-item>
 
         <ion-item-divider>
           <ion-label>Dados pessoais</ion-label>
