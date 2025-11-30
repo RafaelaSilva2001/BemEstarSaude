@@ -4,7 +4,7 @@ import { Consulta } from '../_logica/entidades/Consulta';
 import { ConsultaCRUD } from '../_logica/persistencia/ConsultaCRUD';
 import { CadastroCRUD } from '../_logica/persistencia/CadastroCRUD';
 import { Cadastro } from '../_logica/entidades/Cadastro';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ViewWillEnter } from '@ionic/angular';
 
 @Component({
   selector: 'app-consulta',
@@ -12,7 +12,7 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./consulta.page.scss'],
   standalone: false,
 })
-export class ConsultaPage {
+export class ConsultaPage implements ViewWillEnter {
   consultas: Consulta[] = [];
   minhasConsultas: Consulta[] = [];
   outrasConsultas: Consulta[] = [];
@@ -28,6 +28,9 @@ export class ConsultaPage {
   ) {
     this.consultaCRUD = new ConsultaCRUD(this.storage);
     this.cadastroCRUD = new CadastroCRUD(this.storage);
+  }
+
+  ionViewWillEnter() {
     this.iniciar();
   }
 
