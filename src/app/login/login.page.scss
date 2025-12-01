@@ -1,72 +1,59 @@
-/* Tela inteira branca */
-ion-content.login-content {
+ion-content.login-conteudo {
   --background: #ffffff;
 }
 
-/* Container centralizado */
-.login-container {
+.container-login {
   min-height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 32px 24px;
-  max-width: 420px;
-  /* Largura máxima para tablets/desktop */
-  margin: 0 auto;
-  /* Centraliza horizontalmente */
-  width: 100%;
-  /* Garante que ocupe a largura disponível até o max-width */
+  max-width: 420px; 
+  margin: 0 auto;   
+  width: 100%;      
 }
 
 /* Logo */
-.logo-wrapper {
+.area-logo {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 40px;
 }
 
-.logo-circle {
+.circulo-logo {
   width: 120px;
   height: 120px;
   margin-bottom: 16px;
-  /* Opcional: sombra suave no logo */
-  // box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  // border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.clinic-logo {
+.logo-clinica {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
-.app-title {
+.titulo-clinica {
   font-size: 28px;
-  color: #1a73e8;
-  /* Azul principal */
+  color: #1a73e8; 
   margin: 0;
   font-weight: 400;
   letter-spacing: -0.5px;
 
-  .app-subtitle {
-    font-weight: 400;
-    /* Mesmo peso do título */
-    color: inherit;
-    /* Herda a cor do pai */
+  .subtitulo-clinica {
+    font-weight: 400;  
+    color: inherit;    
   }
 }
 
-/* Formulário */
-.form-wrapper {
+.container-formulario {
   width: 100%;
 }
 
-/* Inputs arredondados e limpos */
-.input-item {
+.item-input {
   --background: #f5f7fb;
   --border-radius: 12px;
   --padding-start: 16px;
@@ -82,15 +69,13 @@ ion-content.login-content {
   }
 }
 
-/* Ícone de senha */
-.password-toggle {
+.icone-ver-senha {
   color: #757575;
   font-size: 20px;
   margin-right: 0;
 }
 
-/* Botão de Login */
-.login-btn {
+.botao-login {
   margin-top: 24px;
   --border-radius: 12px;
   --background: #1a73e8;
@@ -99,12 +84,10 @@ ion-content.login-content {
   font-weight: 600;
   font-size: 16px;
   height: 52px;
-  text-transform: none;
-  /* Remove uppercase padrão do Material Design se houver */
+  text-transform: none; 
 }
 
-/* Mensagem de erro */
-.login-error {
+.erro-login {
   color: #d32f2f;
   text-align: center;
   margin-top: 16px;
@@ -114,8 +97,7 @@ ion-content.login-content {
   border-radius: 8px;
 }
 
-/* Criar conta */
-.signup-wrapper {
+.container-cadastro {
   margin-top: 32px;
   text-align: center;
   font-size: 14px;

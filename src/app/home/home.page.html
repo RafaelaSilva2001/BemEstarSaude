@@ -65,16 +65,15 @@
       <ion-badge [class.active]="secaoAtiva === 'sobre'" (click)="selecionarSecao('sobre')">Sobre a Clínica</ion-badge>
       <ion-badge [class.active]="secaoAtiva === 'missao'" (click)="selecionarSecao('missao')">Missão</ion-badge>
       <ion-badge [class.active]="secaoAtiva === 'valores'" (click)="selecionarSecao('valores')">Valores</ion-badge>
-      <ion-badge [class.active]="secaoAtiva === 'objetivos'"
-        (click)="selecionarSecao('objetivos')">Objetivos</ion-badge>
+      <ion-badge [class.active]="secaoAtiva === 'objetivos'" (click)="selecionarSecao('objetivos')">Objetivos</ion-badge>
       <ion-badge [class.active]="secaoAtiva === 'contato'" (click)="selecionarSecao('contato')">Contato</ion-badge>
     </div>
 
     <!-- Content Area -->
-    <div [ngSwitch]="secaoAtiva" class="institutional-content">
+    <div class="institutional-content">
 
       <!-- Sobre a Clínica -->
-      <div *ngSwitchCase="'sobre'" class="content-card fade-in">
+      <div *ngIf="secaoAtiva === 'sobre'" class="content-card fade-in">
         <div class="about-card">
           <div class="about-content">
             <div class="about-header">
@@ -90,7 +89,7 @@
       </div>
 
       <!-- Missão -->
-      <div *ngSwitchCase="'missao'" class="content-card fade-in">
+      <div *ngIf="secaoAtiva === 'missao'" class="content-card fade-in">
         <div class="info-card blue-border">
           <div class="card-header">
             <ion-icon name="flag-outline" color="primary"></ion-icon>
@@ -101,42 +100,74 @@
       </div>
 
       <!-- Valores -->
-      <div *ngSwitchCase="'valores'" class="content-card fade-in">
+      <div *ngIf="secaoAtiva === 'valores'" class="content-card fade-in">
         <div class="info-card blue-border">
           <div class="card-header">
             <ion-icon name="diamond-outline" color="primary"></ion-icon>
             <h4>Nossos Valores</h4>
           </div>
-          <ul class="values-list">
-            <li><ion-icon name="checkmark-circle-outline" color="success"></ion-icon> Ética</li>
-            <li><ion-icon name="checkmark-circle-outline" color="success"></ion-icon> Humanização</li>
-            <li><ion-icon name="checkmark-circle-outline" color="success"></ion-icon> Compromisso</li>
-            <li><ion-icon name="checkmark-circle-outline" color="success"></ion-icon> Inovação</li>
-            <li><ion-icon name="checkmark-circle-outline" color="success"></ion-icon> Responsabilidade</li>
-          </ul>
+
+          <ion-list class="values-list" lines="none">
+            <ion-item class="value-item">
+              <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
+              <ion-label>Ética</ion-label>
+            </ion-item>
+
+            <ion-item class="value-item">
+              <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
+              <ion-label>Humanização</ion-label>
+            </ion-item>
+
+            <ion-item class="value-item">
+              <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
+              <ion-label>Compromisso</ion-label>
+            </ion-item>
+
+            <ion-item class="value-item">
+              <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
+              <ion-label>Inovação</ion-label>
+            </ion-item>
+
+            <ion-item class="value-item">
+              <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
+              <ion-label>Responsabilidade</ion-label>
+            </ion-item>
+          </ion-list>
         </div>
       </div>
 
-      <!-- Objetivos -->
-      <div *ngSwitchCase="'objetivos'" class="content-card fade-in">
+      <div *ngIf="secaoAtiva === 'objetivos'" class="content-card fade-in">
         <div class="info-card blue-border">
           <div class="card-header">
             <ion-icon name="rocket-outline" color="primary"></ion-icon>
             <h4>Nossos Objetivos</h4>
           </div>
-          <ul class="objectives-list">
-            <li><ion-icon name="arrow-forward-circle-outline" color="tertiary"></ion-icon> Expandir atendimentos</li>
-            <li><ion-icon name="arrow-forward-circle-outline" color="tertiary"></ion-icon> Melhorar continuamente a
-              qualidade dos serviços</li>
-            <li><ion-icon name="arrow-forward-circle-outline" color="tertiary"></ion-icon> Investir em tecnologia</li>
-            <li><ion-icon name="arrow-forward-circle-outline" color="tertiary"></ion-icon> Garantir satisfação dos
-              pacientes</li>
-          </ul>
+
+          <ion-list class="objectives-list" lines="none">
+            <ion-item class="objective-item">
+              <ion-icon slot="start" name="arrow-forward-circle-outline" color="tertiary"></ion-icon>
+              <ion-label>Expandir atendimentos</ion-label>
+            </ion-item>
+
+            <ion-item class="objective-item">
+              <ion-icon slot="start" name="arrow-forward-circle-outline" color="tertiary"></ion-icon>
+              <ion-label>Melhorar continuamente a qualidade dos serviços</ion-label>
+            </ion-item>
+
+            <ion-item class="objective-item">
+              <ion-icon slot="start" name="arrow-forward-circle-outline" color="tertiary"></ion-icon>
+              <ion-label>Investir em tecnologia</ion-label>
+            </ion-item>
+
+            <ion-item class="objective-item">
+              <ion-icon slot="start" name="arrow-forward-circle-outline" color="tertiary"></ion-icon>
+              <ion-label>Garantir satisfação dos pacientes</ion-label>
+            </ion-item>
+          </ion-list>
         </div>
       </div>
 
-      <!-- Contato -->
-      <div *ngSwitchCase="'contato'" class="content-card fade-in">
+      <div *ngIf="secaoAtiva === 'contato'" class="content-card fade-in">
         <div class="info-card blue-border">
           <div class="card-header">
             <ion-icon name="call-outline" color="primary"></ion-icon>
@@ -145,11 +176,11 @@
           <div class="contact-info">
             <div class="contact-item">
               <ion-icon name="location-outline"></ion-icon>
-              <span>rua 01, Agua branca pb</span>
+              <span>Av. Rio Branco, 110, Centro. Afogados da Ingazeira - PE</span>
             </div>
             <div class="contact-item">
               <ion-icon name="call-outline"></ion-icon>
-              <span>879999999</span>
+              <span>(87) 34875-3387</span>
             </div>
             <div class="contact-item">
               <ion-icon name="mail-outline"></ion-icon>

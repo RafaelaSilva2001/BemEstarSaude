@@ -1,4 +1,4 @@
-<ion-header class="ion-no-border">
+<ion-header class="cabecalho">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/home" icon="chevron-back-outline"></ion-back-button>
@@ -9,12 +9,12 @@
 <ion-content class="medicos-content">
 
   <!-- Card roxo topo -->
-  <div class="top-card">
+  <div class="cabecalho-card">
     <h2>Nossos Médicos</h2>
     <p>Profissionais qualificados e experientes à sua disposição</p>
 
     <ion-searchbar placeholder="Buscar médico ou especialidade..." [(ngModel)]="textoBusca"
-      (ionInput)="filtrarMedicos()" class="busca-bar">
+      (ionInput)="filtrarMedicos()" class="barra-busca">
     </ion-searchbar>
   </div>
 
@@ -41,7 +41,7 @@
         </div>
 
         <div class="status">
-          <ion-badge class="badge-status" [color]="estiloStatus(medico.status)">
+          <ion-badge class="status-medico" [color]="estiloStatus(medico.status)">
             {{ medico.status }}
           </ion-badge>
         </div>

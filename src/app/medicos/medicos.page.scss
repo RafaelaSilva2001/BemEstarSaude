@@ -1,10 +1,18 @@
 .medicos-content {
   --background: #f2f4f8;
+
+  ion-item-divider {
+    --background: transparent;
+    --color: #333;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 4px 16px 2px;
+    margin-top: 4px;
+    margin-bottom: 2px;
+  }
 }
 
-/* Header styles removed to use global theme */
-
-.top-card {
+.cabecalho-card {
   margin: 10px 14px 10px;
   padding: 14px 14px 12px;
   border-radius: 14px;
@@ -24,7 +32,7 @@
     margin: 0 0 10px;
   }
 
-  .busca-bar {
+  .barra-busca {
     --background: #ffffff;
     --color: #333;
     --placeholder-color: #888;
@@ -32,18 +40,6 @@
     height: 38px;
     padding: 0;
     margin-top: 4px;
-  }
-}
-
-.medicos-content {
-  ion-item-divider {
-    --background: transparent;
-    --color: #333;
-    font-size: 0.82rem;
-    font-weight: 700;
-    padding: 4px 16px 2px;
-    margin-top: 4px;
-    margin-bottom: 2px;
   }
 }
 
@@ -96,15 +92,13 @@
     }
   }
 
-  /* container do status */
   .status {
     position: absolute;
     right: 0;
     top: 0;
   }
 
-  /* badge base (ion-badge) */
-  .badge-status {
+  .status-medico {
     font-size: 0.62rem;
     font-weight: 700;
     padding: 3px 8px;
@@ -113,7 +107,6 @@
     text-transform: none;
   }
 
-  /* botão roxo “Agendar Consulta” */
   .btn-agendar {
     margin-top: 8px;
     height: 34px;
@@ -125,7 +118,6 @@
     text-transform: none;
   }
 
-  /* visual quando o botão estiver desabilitado (médico indisponível) */
   .btn-agendar[disabled] {
     --background: #cccccc;
     --background-hover: #cccccc;
