@@ -1,53 +1,51 @@
-<ion-content class="home-content">
+<ion-content class="conteudo-home">
 
-  <!-- Hero Section -->
-  <div class="hero-section">
-    <div class="hero-header">
-      <div class="brand">
-        <div class="logo-circle">
+  <div class="secao-hero">
+    <div class="cabecalho-hero">
+      <div class="marca">
+        <div class="logo-circulo">
           <img src="assets/img/logoClinica.png" alt="Logo">
         </div>
-        <div class="app-text">
-          <span class="name">Bem Estar</span>
-          <span class="sub">Saúde</span>
+        <div class="texto-app">
+          <span class="nome-app">Bem Estar</span>
+          <span class="subtitulo-app">Saúde</span>
         </div>
       </div>
     </div>
 
-    <div class="hero-content">
+    <div class="conteudo-hero">
       <h2>{{ saudacao }},</h2>
       <h1>{{ nome || 'Paciente' }}</h1>
       <p>Cuide da sua saúde com praticidade</p>
     </div>
   </div>
 
-  <!-- Quick Actions Grid -->
-  <div class="actions-container">
-    <div class="actions-grid">
+  <div class="container-acoes">
+    <div class="grade-acoes">
 
-      <button class="action-card" routerLink="/tabs/agendar-consulta">
-        <div class="icon-wrapper blue">
+      <button class="card-acao" routerLink="/tabs/agendar-consulta">
+        <div class="icone-acao azul">
           <ion-icon name="medkit-outline"></ion-icon>
         </div>
         <span>Agendar Consulta</span>
       </button>
 
-      <button class="action-card" routerLink="/tabs/medicos">
-        <div class="icon-wrapper green">
+      <button class="card-acao" routerLink="/tabs/medicos">
+        <div class="icone-acao verde">
           <ion-icon name="document-text-outline"></ion-icon>
         </div>
         <span>Médicos</span>
       </button>
 
-      <button class="action-card" routerLink="/tabs/especialidades">
-        <div class="icon-wrapper purple">
+      <button class="card-acao" routerLink="/tabs/especialidades">
+        <div class="icone-acao roxo">
           <ion-icon name="calendar-outline"></ion-icon>
         </div>
         <span>Especialidades</span>
       </button>
 
-      <button class="action-card" routerLink="/tabs/consulta">
-        <div class="icon-wrapper orange">
+      <button class="card-acao" routerLink="/tabs/consulta">
+        <div class="icone-acao laranja">
           <ion-icon name="time-outline"></ion-icon>
         </div>
         <span>Histórico</span>
@@ -56,31 +54,30 @@
     </div>
   </div>
 
-  <!-- Institutional Section -->
-  <div class="section-container">
-    <h3 class="section-title">Institucional</h3>
+  <div class="container-secao">
+    <h3 class="titulo-secao">Institucional</h3>
 
-    <!-- Badges Navigation -->
-    <div class="badges-container">
+    <div class="container-etiquetas">
       <ion-badge [class.active]="secaoAtiva === 'sobre'" (click)="selecionarSecao('sobre')">Sobre a Clínica</ion-badge>
       <ion-badge [class.active]="secaoAtiva === 'missao'" (click)="selecionarSecao('missao')">Missão</ion-badge>
       <ion-badge [class.active]="secaoAtiva === 'valores'" (click)="selecionarSecao('valores')">Valores</ion-badge>
-      <ion-badge [class.active]="secaoAtiva === 'objetivos'" (click)="selecionarSecao('objetivos')">Objetivos</ion-badge>
+      <ion-badge [class.active]="secaoAtiva === 'objetivos'"
+        (click)="selecionarSecao('objetivos')">Objetivos</ion-badge>
       <ion-badge [class.active]="secaoAtiva === 'contato'" (click)="selecionarSecao('contato')">Contato</ion-badge>
     </div>
 
     <!-- Content Area -->
-    <div class="institutional-content">
+    <div class="conteudo-clinica">
 
       <!-- Sobre a Clínica -->
-      <div *ngIf="secaoAtiva === 'sobre'" class="content-card fade-in">
-        <div class="about-card">
-          <div class="about-content">
-            <div class="about-header">
+      <div *ngIf="secaoAtiva === 'sobre'" class="card-conteudo sobre">
+        <div class="card-sobre">
+          <div class="conteudo-sobre">
+            <div class="cabecalho-sobre">
               <ion-icon name="business-outline"></ion-icon>
               <h4>Bem Estar Saúde</h4>
             </div>
-            <img src="assets/img/frenteClinica.png" alt="Frente da Clínica BemEstar Saúde" class="about-image">
+            <img src="assets/img/frenteClinica.png" alt="Frente da Clínica BemEstar Saúde" class="imagem-sobre">
             <p>A Clínica BemEstar Saúde é referência em atendimento humanizado e tecnologia de ponta. Nossa missão é
               cuidar de você e da sua família com dedicação, oferecendo uma equipe qualificada e infraestrutura completa
               para o seu bem-estar.</p>
@@ -89,9 +86,9 @@
       </div>
 
       <!-- Missão -->
-      <div *ngIf="secaoAtiva === 'missao'" class="content-card fade-in">
-        <div class="info-card blue-border">
-          <div class="card-header">
+      <div *ngIf="secaoAtiva === 'missao'" class="card-conteudo missao">
+        <div class="card-info borda-azul">
+          <div class="cabecalho-card">
             <ion-icon name="flag-outline" color="primary"></ion-icon>
             <h4>Nossa Missão</h4>
           </div>
@@ -99,36 +96,35 @@
         </div>
       </div>
 
-      <!-- Valores -->
-      <div *ngIf="secaoAtiva === 'valores'" class="content-card fade-in">
-        <div class="info-card blue-border">
-          <div class="card-header">
+      <div *ngIf="secaoAtiva === 'valores'" class="card-conteudo-valores">
+        <div class="card-info borda-azul">
+          <div class="cabecalho-card">
             <ion-icon name="diamond-outline" color="primary"></ion-icon>
             <h4>Nossos Valores</h4>
           </div>
 
-          <ion-list class="values-list" lines="none">
-            <ion-item class="value-item">
+          <ion-list class="lista-valores" lines="none">
+            <ion-item class="item-valor">
               <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
               <ion-label>Ética</ion-label>
             </ion-item>
 
-            <ion-item class="value-item">
+            <ion-item class="item-valor">
               <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
               <ion-label>Humanização</ion-label>
             </ion-item>
 
-            <ion-item class="value-item">
+            <ion-item class="item-valor">
               <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
               <ion-label>Compromisso</ion-label>
             </ion-item>
 
-            <ion-item class="value-item">
+            <ion-item class="item-valor">
               <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
               <ion-label>Inovação</ion-label>
             </ion-item>
 
-            <ion-item class="value-item">
+            <ion-item class="item-valor">
               <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
               <ion-label>Responsabilidade</ion-label>
             </ion-item>
@@ -136,30 +132,31 @@
         </div>
       </div>
 
-      <div *ngIf="secaoAtiva === 'objetivos'" class="content-card fade-in">
-        <div class="info-card blue-border">
-          <div class="card-header">
+      <!-- Objetivos -->
+      <div *ngIf="secaoAtiva === 'objetivos'" class="card-conteudo fade-in">
+        <div class="card-info borda-azul">
+          <div class="cabecalho-card">
             <ion-icon name="rocket-outline" color="primary"></ion-icon>
             <h4>Nossos Objetivos</h4>
           </div>
 
-          <ion-list class="objectives-list" lines="none">
-            <ion-item class="objective-item">
+          <ion-list class="lista-objetivos" lines="none">
+            <ion-item class="item-objetivo">
               <ion-icon slot="start" name="arrow-forward-circle-outline" color="tertiary"></ion-icon>
               <ion-label>Expandir atendimentos</ion-label>
             </ion-item>
 
-            <ion-item class="objective-item">
+            <ion-item class="item-objetivo">
               <ion-icon slot="start" name="arrow-forward-circle-outline" color="tertiary"></ion-icon>
               <ion-label>Melhorar continuamente a qualidade dos serviços</ion-label>
             </ion-item>
 
-            <ion-item class="objective-item">
+            <ion-item class="item-objetivo">
               <ion-icon slot="start" name="arrow-forward-circle-outline" color="tertiary"></ion-icon>
               <ion-label>Investir em tecnologia</ion-label>
             </ion-item>
 
-            <ion-item class="objective-item">
+            <ion-item class="item-objetivo">
               <ion-icon slot="start" name="arrow-forward-circle-outline" color="tertiary"></ion-icon>
               <ion-label>Garantir satisfação dos pacientes</ion-label>
             </ion-item>
@@ -167,22 +164,22 @@
         </div>
       </div>
 
-      <div *ngIf="secaoAtiva === 'contato'" class="content-card fade-in">
-        <div class="info-card blue-border">
-          <div class="card-header">
+      <div *ngIf="secaoAtiva === 'contato'" class="card-conteudo fade-in">
+        <div class="card-info borda-azul">
+          <div class="cabecalho-card">
             <ion-icon name="call-outline" color="primary"></ion-icon>
             <h4>Fale Conosco</h4>
           </div>
-          <div class="contact-info">
-            <div class="contact-item">
+          <div class="info-contato">
+            <div class="item-contato">
               <ion-icon name="location-outline"></ion-icon>
               <span>Av. Rio Branco, 110, Centro. Afogados da Ingazeira - PE</span>
             </div>
-            <div class="contact-item">
+            <div class="item-contato">
               <ion-icon name="call-outline"></ion-icon>
               <span>(87) 34875-3387</span>
             </div>
-            <div class="contact-item">
+            <div class="item-contato">
               <ion-icon name="mail-outline"></ion-icon>
               <span>bemestarsaude@gmail.com</span>
             </div>
@@ -192,7 +189,5 @@
 
     </div>
   </div>
-
-  <div class="spacer-bottom"></div>
-
+  <div class="espaco-rodape"></div>
 </ion-content>

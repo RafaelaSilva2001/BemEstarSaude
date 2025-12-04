@@ -1,36 +1,32 @@
-<ion-header class="ion-no-border">
+<ion-header class="cabecalho">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button slot="start" defaultHref="/tabs/home" icon="home-outline" text=""></ion-back-button>
+      <ion-back-button defaultHref="/tabs/home" icon="chevron-back-outline"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="spec-content">
+<ion-content class="conteudo-especialidades">
 
-  <!-- Faixa verde -->
-  <div class="hero">
+  <div class="faixa-especialidades">
     <h2>Especialidades Médicas</h2>
     <p>Conheça nossas especialidades e áreas de atendimento</p>
 
-    <div class="search-wrap">
-      <ion-searchbar class="hero-search" placeholder="Buscar especialidade..." [(ngModel)]="termoBusca"
+    <div class="container-busca">
+      <ion-searchbar class="busca-especialidade" placeholder="Buscar especialidade..." [(ngModel)]="termoBusca"
         (ionInput)="filtrar()">
       </ion-searchbar>
     </div>
   </div>
 
-  <div class="page-body">
+  <div class="especialidades">
 
-    <ion-item-divider class="section-title">Todas as Especialidades</ion-item-divider>
+    <div class="lista-especialidades">
 
-    <div class="spec-list">
+      <button class="card-especialidade" *ngFor="let esp of especialidadesFiltradas" (click)="abrir(esp)">
 
-      <button class="spec-card" *ngFor="let esp of especialidadesFiltradas" (click)="abrir(esp)">
+        <div class="icone-especialidade {{ esp.getTipo() }}">
 
-        <div class="icon-badge {{ esp.getTipo() }}">
-
-          <!-- AQUI: ícone decidido 100% no HTML -->
           <ion-icon [name]="
               esp.getTipo() === 'Cardiologia'   ? 'heart-outline' :
               esp.getTipo() === 'Neurologia'    ? 'scan-circle-outline' :
@@ -43,7 +39,7 @@
 
         </div>
 
-        <div class="spec-text">
+        <div class="texto-especialidade">
           <h4>{{ esp.getNome() }}</h4>
           <p>{{ esp.getDescricao() }}</p>
         </div>

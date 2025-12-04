@@ -16,7 +16,6 @@ export class ConsultaPage implements ViewWillEnter {
   consultas: Consulta[] = [];
   minhasConsultas: Consulta[] = [];
   outrasConsultas: Consulta[] = [];
-  carregando: boolean = true;
   usuarioLogado: Cadastro | null = null;
 
   private consultaCRUD: ConsultaCRUD;
@@ -42,7 +41,6 @@ export class ConsultaPage implements ViewWillEnter {
     this.consultas = await this.consultaCRUD.obterConsultas();
 
     this.filtrarConsultas();
-    this.carregando = false;
   }
 
   private filtrarConsultas() {

@@ -2,16 +2,15 @@
   --background: #f8f9fa;
 }
 
-.relatorio-wrapper {
+.relatorio-consulta {
   min-height: 100%;
   padding-bottom: 40px;
 }
 
-/* HERO SECTION */
-.hero-section {
+/* CARD DESTAQUE (hero) */
+.card-destaque {
   background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
-  padding: 24px 20px 40px;
-  /* Reduced padding */
+  padding: 24px 20px 40px; /* Reduced padding */
   border-bottom-left-radius: 32px;
   border-bottom-right-radius: 32px;
   color: #fff;
@@ -19,15 +18,13 @@
   margin-bottom: 20px;
 
   h2 {
-    font-size: 1.3rem;
-    /* Reduced from 1.5rem */
+    font-size: 1.3rem; /* Reduced from 1.5rem */
     font-weight: 700;
     margin: 0 0 6px;
   }
 
   p {
-    font-size: 0.85rem;
-    /* Reduced from 0.95rem */
+    font-size: 0.85rem; /* Reduced from 0.95rem */
     opacity: 0.9;
     margin: 0;
     font-weight: 400;
@@ -35,10 +32,9 @@
   }
 }
 
-/* HEADER LISTA */
-.lista-header {
-  font-size: 0.75rem;
-  /* Reduced from 0.85rem */
+/* CABEÇALHO LISTA */
+.cabecalho-lista {
+  font-size: 0.75rem; /* Reduced from 0.85rem */
   color: #64748b;
   margin: 0 24px 12px;
   font-weight: 600;
@@ -46,8 +42,8 @@
   letter-spacing: 0.5px;
 }
 
-/* LOADING */
-.loading-container {
+/* (se voltar a usar loading, pode usar essa classe no HTML) */
+.container-carregando {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,13 +53,11 @@
 
   ion-spinner {
     color: #1e88e5;
-    transform: scale(1.0);
-    /* Reduced scale */
+    transform: scale(1); /* Reduced scale */
   }
 
   p {
-    font-size: 0.85rem;
-    /* Reduced from 0.9rem */
+    font-size: 0.85rem; /* Reduced from 0.9rem */
     font-weight: 500;
   }
 }
@@ -71,8 +65,7 @@
 /* EMPTY STATE */
 .sem-consultas {
   text-align: center;
-  font-size: 0.9rem;
-  /* Reduced from 1rem */
+  font-size: 0.9rem; /* Reduced from 1rem */
   color: #64748b;
   margin-top: 40px;
   padding: 0 24px;
@@ -83,124 +76,111 @@
 .lista-consultas {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  /* Reduced gap */
+  gap: 12px; /* Reduced gap */
   padding: 0 20px;
 }
 
 /* CARD */
-.consulta-card {
+.card-consulta {
   margin: 0;
-  border-radius: 16px;
-  /* Slightly reduced radius */
+  border-radius: 16px; /* Slightly reduced radius */
   box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.08);
   background: #ffffff;
   border: 1px solid #f1f5f9;
   overflow: visible;
 
   ion-card-content {
-    padding: 16px;
-    /* Reduced padding */
+    padding: 16px; /* Reduced padding */
   }
 }
 
 /* CARD HEADER */
-.consulta-card-header {
+.cabecalho-card-consulta {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
-  /* Reduced margin */
+  margin-bottom: 12px; /* Reduced margin */
 }
 
-.consulta-actions {
+.acoes-consulta {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
 /* BUTTONS */
-.cancel-btn,
-.delete-btn {
+.botao-cancelar,
+.botao-excluir {
   margin: 0;
   --padding-start: 6px;
   --padding-end: 6px;
-  height: 28px;
-  /* Reduced height */
+  height: 28px; /* Reduced height */
   --border-radius: 6px;
 }
 
-.cancel-btn {
+.botao-cancelar {
   color: #f59e0b;
 
   ion-icon {
-    font-size: 20px;
-    /* Reduced size */
+    font-size: 20px; /* Reduced size */
   }
 }
 
-.delete-btn {
+.botao-excluir {
   color: #ef4444;
 
   ion-icon {
-    font-size: 18px;
-    /* Reduced size */
+    font-size: 18px; /* Reduced size */
   }
 }
 
 /* BADGES */
-.consulta-badge {
+.selo-consulta {
   display: inline-flex;
   align-items: center;
-  padding: 3px 10px;
-  /* Reduced padding */
+  padding: 3px 10px; /* Reduced padding */
   border-radius: 20px;
-  font-size: 0.65rem;
-  /* Reduced from 0.75rem */
+  font-size: 0.65rem; /* Reduced from 0.75rem */
   font-weight: 700;
   letter-spacing: 0.3px;
 }
 
-.consulta-badge--agendada {
+.selo-consulta--agendada {
   background: #dbeafe;
   color: #1e40af;
 }
 
-.consulta-badge--cancelada {
+.selo-consulta--cancelada {
   background: #fee2e2;
   color: #991b1b;
 }
 
 /* INFO */
 .consulta-especialidade {
-  font-size: 1rem;
-  /* Reduced from 1.1rem */
+  font-size: 1rem; /* Reduced from 1.1rem */
   font-weight: 700;
   color: #1e293b;
   margin: 0 0 4px;
 }
 
 .consulta-medico {
-  font-size: 0.8rem;
-  /* Reduced from 0.9rem */
+  font-size: 0.8rem; /* Reduced from 0.9rem */
   color: #64748b;
   margin: 0 0 12px;
   font-weight: 500;
 }
 
 /* META INFO (Data/Hora) */
-.consulta-meta {
+.consulta-info {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px;
-  /* Reduced padding */
+  padding: 10px; /* Reduced padding */
   background: #f8fafc;
   border-radius: 10px;
   margin-bottom: 12px;
   color: #475569;
-  font-size: 0.75rem;
-  /* Reduced from 0.85rem */
+  font-size: 0.75rem; /* Reduced from 0.85rem */
   font-weight: 500;
 
   div {
@@ -211,8 +191,7 @@
 
   ion-icon {
     color: #3b82f6;
-    font-size: 16px;
-    /* Reduced size */
+    font-size: 16px; /* Reduced size */
   }
 }
 
@@ -222,8 +201,7 @@
   padding-top: 10px;
 
   p {
-    font-size: 0.75rem;
-    /* Reduced from 0.85rem */
+    font-size: 0.75rem; /* Reduced from 0.85rem */
     color: #64748b;
     margin: 0;
   }

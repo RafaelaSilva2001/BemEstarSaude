@@ -1,4 +1,4 @@
-<ion-header class="ion-no-border">
+<ion-header class="ion-cabecalho">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button slot="start" defaultHref="/login" text=""></ion-back-button>
@@ -6,29 +6,29 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="conteudo-pagina">
 
-  <div class="form-wrapper">
-    <div class="header-title">
+  <div class="container-formulario">
+    <div class="cabecalho-formulario">
       <h1>Criar Conta</h1>
       <p>Preencha os dados abaixo para se cadastrar</p>
     </div>
 
-    <ion-card class="form-card">
+    <ion-card class="card-formulario">
       <ion-card-content>
 
         <ion-item-divider>
           <ion-label>Foto de Perfil</ion-label>
         </ion-item-divider>
 
-        <ion-item lines="none" class="photo-upload-item">
-          <div class="photo-upload-container">
-            <div class="photo-preview" *ngIf="foto" [style.background-image]="'url(' + foto + ')'"></div>
-            <div class="photo-placeholder" *ngIf="!foto">
+        <ion-item lines="none" class="envio-foto">
+          <div class="container-envio-foto">
+            <div class="previa-foto" *ngIf="foto" [style.background-image]="'url(' + foto + ')'"></div>
+            <div class="espaco-foto" *ngIf="!foto">
               <ion-icon name="person-circle-outline"></ion-icon>
             </div>
             <input type="file" (change)="selecionarFoto($event)" accept="image/*" id="file-input" hidden>
-            <label for="file-input" class="upload-btn">
+            <label for="file-input" class="botao-enviar-foto">
               <ion-icon name="camera-outline"></ion-icon>
               Escolher Foto
             </label>
@@ -40,30 +40,30 @@
         </ion-item-divider>
 
         <ion-item>
-          <ion-input label="Nome completo" label-placement="stacked" placeholder="Digite seu nome" [(ngModel)]="nome">
+          <ion-input label="Nome completo" labelPlacement="floating" placeholder="Digite seu nome" [(ngModel)]="nome">
           </ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-input type="email" label="E-mail" label-placement="stacked" placeholder="Digite seu e-mail"
+          <ion-input type="email" label="E-mail" labelPlacement="floating" placeholder="Digite seu e-mail"
             [(ngModel)]="email">
           </ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-input label="CPF" label-placement="stacked" placeholder="000.000.000-00" [(ngModel)]="cpf"
+          <ion-input label="CPF" labelPlacement="floating" placeholder="000.000.000-00" [(ngModel)]="cpf"
             (ionInput)="mascaraCPF($event)">
           </ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-input label="Data de nascimento" label-placement="stacked" placeholder="DD/MM/AAAA"
+          <ion-input label="Data de nascimento" labelPlacement="floating" placeholder="DD/MM/AAAA"
             [(ngModel)]="dataNascimento" (ionInput)="mascaraDataNasc($event)">
           </ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-select label="Gênero" label-placement="stacked" placeholder="Selecione" [(ngModel)]="genero">
+          <ion-select label="Gênero" labelPlacement="floating" placeholder="Selecione" [(ngModel)]="genero">
             <ion-select-option value="Masculino">Masculino</ion-select-option>
             <ion-select-option value="Feminino">Feminino</ion-select-option>
             <ion-select-option value="Outro">Outro</ion-select-option>
@@ -72,7 +72,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-input type="password" label="Senha" label-placement="stacked" placeholder="Digite sua senha"
+          <ion-input type="password" label="Senha" labelPlacement="floating" placeholder="Digite sua senha"
             [(ngModel)]="senha">
           </ion-input>
         </ion-item>
@@ -82,7 +82,7 @@
         </ion-item-divider>
 
         <ion-item>
-          <ion-input label="Logradouro" label-placement="stacked" placeholder="Rua, Avenida, etc."
+          <ion-input label="Logradouro" labelPlacement="floating" placeholder="Rua, Avenida, etc."
             [(ngModel)]="logradouro">
           </ion-input>
         </ion-item>
@@ -91,14 +91,14 @@
           <ion-row>
             <ion-col size="4">
               <ion-item>
-                <ion-input label="Número" placeholder="Número" label-placement="stacked" [(ngModel)]="numero">
+                <ion-input label="Número" placeholder="Número" labelPlacement="floating" [(ngModel)]="numero">
                 </ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col size="8">
               <ion-item>
-                <ion-input label="Bairro" placeholder="Bairro" label-placement="stacked" [(ngModel)]="bairro">
+                <ion-input label="Bairro" placeholder="Bairro" labelPlacement="floating" [(ngModel)]="bairro">
                 </ion-input>
               </ion-item>
             </ion-col>
@@ -109,14 +109,14 @@
           <ion-row>
             <ion-col size="7">
               <ion-item>
-                <ion-input label="Cidade" placeholder="Cidade" label-placement="stacked" [(ngModel)]="cidade">
+                <ion-input label="Cidade" placeholder="Cidade" labelPlacement="floating" [(ngModel)]="cidade">
                 </ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col size="5">
               <ion-item>
-                <ion-select label="Estado" label-placement="stacked" placeholder="UF" [(ngModel)]="estado">
+                <ion-select label="Estado" labelPlacement="floating" placeholder="UF" [(ngModel)]="estado">
                   <ion-select-option value="AC">AC</ion-select-option>
                   <ion-select-option value="AL">AL</ion-select-option>
                   <ion-select-option value="AP">AP</ion-select-option>
@@ -151,17 +151,17 @@
         </ion-grid>
 
         <ion-item>
-          <ion-input label="CEP" label-placement="stacked" placeholder="00000-000" [(ngModel)]="cep"
+          <ion-input label="CEP" labelPlacement="floating" placeholder="00000-000" [(ngModel)]="cep"
             (ionInput)="mascaraCEP($event)">
           </ion-input>
         </ion-item>
 
-        <ion-button expand="block" shape="round" class="submit-btn" (click)="cadastrar()">
+        <ion-button expand="block" shape="round" class="botao-criar-conta" (click)="cadastrar()">
           Criar Conta
         </ion-button>
 
         <ion-item lines="none">
-          <ion-label class="link-login">
+          <ion-label class="link-entrar">
             Já possui conta?
             <a routerLink="/login"> Entrar</a>
           </ion-label>
@@ -170,5 +170,4 @@
       </ion-card-content>
     </ion-card>
   </div>
-
 </ion-content>

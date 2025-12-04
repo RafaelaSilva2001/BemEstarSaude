@@ -1,4 +1,4 @@
-<ion-header class="ion-no-border">
+<ion-header class="cabecalho">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/home" icon="chevron-back-outline"></ion-back-button>
@@ -6,18 +6,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="page-content">
-  <div class="page-container">
-    <div class="form-card">
+<ion-content class="conteudo-pagina">
+  <div class="container-pagina">
+    <div class="card-formulario">
 
       <!-- Card topo -->
-      <ion-card class="info-card">
-        <ion-card-content class="info-card__content">
-          <div class="info-card__icon">
+      <ion-card class="card-info">
+        <ion-card-content class="card-info-conteudo">
+          <div class="card-info-icone">
             <ion-icon name="time-outline"></ion-icon>
           </div>
 
-          <div class="info-card__text">
+          <div class="card-info-texto">
             <h3>Agendar Consulta</h3>
             <p>Escolha a especialidade e o horário</p>
           </div>
@@ -25,13 +25,13 @@
       </ion-card>
 
       <!-- Para quem é a consulta -->
-      <section class="field">
-        <label class="field__label">
+      <section class="paciente-consulta">
+        <label class="paciente-consulta-rotulo">
           <ion-icon name="people-outline"></ion-icon>
           Para quem é a consulta?
         </label>
 
-        <ion-item class="field__item" lines="none">
+        <ion-item class="paciente-consulta-item" lines="none">
           <ion-select interface="popover" placeholder="Selecione" [(ngModel)]="consultaPara"
             (ionChange)="buscarConsulta()">
             <ion-select-option value="mim">Para mim</ion-select-option>
@@ -41,59 +41,58 @@
       </section>
 
       <!-- Bloco paciente (aparece se for outra pessoa) -->
-      <div class="other-person-block" *ngIf="consultaPara === 'outro'">
+      <div class="bloco-outra-pessoa" *ngIf="consultaPara === 'outro'">
 
-        <section class="field">
-          <label class="field__label">
+        <section class="paciente-consulta">
+          <label class="paciente-consulta-rotulo">
             <ion-icon name="person-outline"></ion-icon>
             Nome do paciente
           </label>
 
-          <ion-item class="field__item" lines="none">
+          <ion-item class="paciente-consulta-item" lines="none">
             <ion-input placeholder="Digite o nome completo" [(ngModel)]="paciente.nome">
             </ion-input>
           </ion-item>
         </section>
 
-        <section class="field">
-          <label class="field__label">
+        <section class="paciente-consulta">
+          <label class="paciente-consulta-rotulo">
             <ion-icon name="card-outline"></ion-icon>
             CPF do paciente
           </label>
 
-          <ion-item class="field__item" lines="none">
+          <ion-item class="paciente-consulta-item" lines="none">
             <ion-input placeholder="000.000.000-00" inputmode="numeric" [(ngModel)]="paciente.cpf"
               (ionInput)="maskCPF($event)">
             </ion-input>
           </ion-item>
         </section>
 
-        <section class="field">
-          <label class="field__label">
+        <section class="paciente-consulta">
+          <label class="paciente-consulta-rotulo">
             <ion-icon name="calendar-outline"></ion-icon>
             Data de nascimento
           </label>
 
-          <ion-item class="field__item" lines="none">
+          <ion-item class="paciente-consulta-item" lines="none">
             <ion-input placeholder="DD/MM/AAAA" [(ngModel)]="paciente.dataNascimento"
               (ionInput)="maskDataNascimento($event)">
             </ion-input>
           </ion-item>
         </section>
 
-
-        <section class="field">
-          <label class="field__label">
+        <section class="paciente-consulta">
+          <label class="paciente-consulta-rotulo">
             <ion-icon name="male-female-outline"></ion-icon>
             Gênero
           </label>
 
-          <ion-item class="field__item" lines="none">
+          <ion-item class="paciente-consulta-item" lines="none">
             <ion-select interface="popover" placeholder="Selecione" [(ngModel)]="paciente.genero">
-              <ion-select-option value="F">Feminino</ion-select-option>
-              <ion-select-option value="M">Masculino</ion-select-option>
-              <ion-select-option value="O">Outro</ion-select-option>
-              <ion-select-option value="N">Prefiro não informar</ion-select-option>
+              <ion-select-option value="Feminino">Feminino</ion-select-option>
+              <ion-select-option value="Masculino">Masculino</ion-select-option>
+              <ion-select-option value="Outro">Outro</ion-select-option>
+              <ion-select-option value="Nao_Informar">Prefiro não informar</ion-select-option>
             </ion-select>
           </ion-item>
         </section>
@@ -101,13 +100,13 @@
       </div>
 
       <!-- Especialidade -->
-      <section class="field">
-        <label class="field__label">
+      <section class="paciente-consulta">
+        <label class="paciente-consulta-rotulo">
           <ion-icon name="bandage-outline"></ion-icon>
           Especialidade
         </label>
 
-        <ion-item class="field__item" lines="none">
+        <ion-item class="paciente-consulta-item" lines="none">
           <ion-select interface="popover" placeholder="Selecione a especialidade" [(ngModel)]="especialidadeSelecionada"
             (ionChange)="buscarEspecialidade()">
             <ion-select-option *ngFor="let esp of especialidades" [value]="esp">
@@ -118,13 +117,13 @@
       </section>
 
       <!-- Médico -->
-      <section class="field">
-        <label class="field__label">
+      <section class="paciente-consulta">
+        <label class="paciente-consulta-rotulo">
           <ion-icon name="person-outline"></ion-icon>
           Médico
         </label>
 
-        <ion-item class="field__item" lines="none">
+        <ion-item class="paciente-consulta-item" lines="none">
           <ion-select interface="popover" placeholder="Selecione o médico" [(ngModel)]="medicoSelecionado"
             [disabled]="medicosFiltrados.length === 0">
             <ion-select-option *ngFor="let med of medicosFiltrados" [value]="med.nome">
@@ -135,36 +134,36 @@
       </section>
 
       <!-- Data da consulta -->
-      <section class="field">
-        <label class="field__label">
+      <section class="paciente-consulta">
+        <label class="paciente-consulta-rotulo">
           <ion-icon name="calendar-outline"></ion-icon>
           Data
         </label>
 
-        <ion-item class="field__item" lines="none">
+        <ion-item class="paciente-consulta-item" lines="none">
           <ion-input type="date" [(ngModel)]="dataConsulta">
           </ion-input>
         </ion-item>
       </section>
 
       <!-- Horário da consulta (ion-select) -->
-      <section class="field">
-        <label class="field__label">
+      <section class="paciente-consulta">
+        <label class="paciente-consulta-rotulo">
           <ion-icon name="time-outline"></ion-icon>
           Horário
         </label>
 
-        <ion-item class="field__item" lines="none">
+        <ion-item class="paciente-consulta-item" lines="none">
           <ion-select interface="popover" placeholder="Selecione o horário" [(ngModel)]="horarioConsulta">
-            <ion-select-option *ngFor="let h of horariosDisponiveis" [value]="h">
-              {{ h }}
+            <ion-select-option *ngFor="let horario of horariosDisponiveis" [value]="horario">
+              {{ horario }}
             </ion-select-option>
           </ion-select>
         </ion-item>
       </section>
 
       <!-- Botão -->
-      <ion-button class="confirm-btn" expand="block" shape="round" [disabled]="!formularioValido"
+      <ion-button class="botao-confirmar" expand="block" shape="round" [disabled]="!formularioValido"
         (click)="confirmarAgendamento()">
         Agendar
       </ion-button>

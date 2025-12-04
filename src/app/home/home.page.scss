@@ -1,11 +1,9 @@
-.home-content {
+.conteudo-home {
     --background: #f8f9fa;
 
-    /* HERO SECTION */
-    .hero-section {
+    .secao-hero {
         background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
         padding: 20px 24px 80px;
-        /* Extra bottom padding for overlap */
         border-bottom-left-radius: 32px;
         border-bottom-right-radius: 32px;
         color: #fff;
@@ -13,18 +11,18 @@
         z-index: 1;
     }
 
-    .hero-header {
+    .cabecalho-hero {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 32px;
 
-        .brand {
+        .marca {
             display: flex;
             align-items: center;
             gap: 10px;
 
-            .logo-circle {
+            .logo-circulo {
                 width: 40px;
                 height: 40px;
                 background: rgba(255, 255, 255, 0.2);
@@ -40,17 +38,17 @@
                 }
             }
 
-            .app-text {
+            .texto-app {
                 display: flex;
                 flex-direction: column;
                 line-height: 1.1;
 
-                .name {
+                .nome-app {
                     font-weight: 700;
                     font-size: 1rem;
                 }
 
-                .sub {
+                .subtitulo-app {
                     font-size: 0.75rem;
                     opacity: 0.8;
                 }
@@ -58,7 +56,7 @@
         }
     }
 
-    .hero-content {
+    .conteudo-hero {
         h2 {
             font-size: 1.1rem;
             font-weight: 400;
@@ -81,7 +79,7 @@
     }
 
     /* ACTIONS GRID */
-    .actions-container {
+    .container-acoes {
         padding: 0 20px;
         margin-top: -50px;
         /* Overlap hero */
@@ -89,13 +87,13 @@
         z-index: 10;
     }
 
-    .actions-grid {
+    .grade-acoes {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
     }
 
-    .action-card {
+    .card-acao {
         background: #ffffff;
         border: none;
         border-radius: 20px;
@@ -114,7 +112,7 @@
             transform: scale(0.98);
         }
 
-        .icon-wrapper {
+        .icone-acao {
             width: 56px;
             height: 56px;
             border-radius: 50%;
@@ -126,19 +124,19 @@
                 color: #fff;
             }
 
-            &.blue {
+            &.azul {
                 background: #3b82f6;
             }
 
-            &.green {
+            &.verde {
                 background: #10b981;
             }
 
-            &.purple {
+            &.roxo {
                 background: #a855f7;
             }
 
-            &.orange {
+            &.laranja {
                 background: #f97316;
             }
         }
@@ -152,20 +150,18 @@
         }
     }
 
-    /* SECTIONS */
-    .section-container {
+    .container-secao {
         padding: 24px 20px 0;
     }
 
-    .section-title {
+    .titulo-secao {
         font-size: 1.1rem;
         font-weight: 700;
         color: #1f2937;
         margin: 0 0 16px;
     }
 
-    /* INSTITUTIONAL SECTION */
-    .badges-container {
+    .container-etiquetas {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -193,12 +189,12 @@
         }
     }
 
-    .institutional-content {
+    .conteudo-clinica {
         min-height: 250px;
-        /* Prevent layout shift */
     }
 
-    .content-card {
+    .card-conteudo,
+    .card-conteudo-valores {
         animation: fadeIn 0.4s ease-in-out;
     }
 
@@ -214,17 +210,17 @@
         }
     }
 
-    .info-card {
+    .card-info {
         background: #fff;
         border-radius: 20px;
         padding: 20px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 
-        &.blue-border {
+        &.borda-azul {
             border-left: 4px solid #1e88e5;
         }
 
-        .card-header {
+        .cabecalho-card {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -249,20 +245,22 @@
         }
     }
 
-    /* LISTS STYLES */
-    .values-list,
-    .objectives-list {
-        list-style: none;
+    .lista-valores,
+    .lista-objetivos {
         padding: 0;
         margin: 0;
 
-        li {
+        .item-valor,
+        .item-objetivo {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 10px;
             color: #444;
             font-size: 0.95rem;
+            --background: transparent;
+            /* para ion-item */
+            --min-height: 36px;
 
             ion-icon {
                 font-size: 1.2rem;
@@ -270,13 +268,12 @@
         }
     }
 
-    /* CONTACT STYLES */
-    .contact-info {
+    .info-contato {
         display: flex;
         flex-direction: column;
         gap: 12px;
 
-        .contact-item {
+        .item-contato {
             display: flex;
             align-items: center;
             gap: 12px;
@@ -293,8 +290,7 @@
         }
     }
 
-    /* REUSED ABOUT CARD STYLES */
-    .about-card {
+    .card-sobre {
         background: #fff;
         border-radius: 20px;
         padding: 20px;
@@ -302,7 +298,7 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         border-left: 4px solid #1e88e5;
 
-        .about-header {
+        .cabecalho-sobre {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -321,14 +317,7 @@
             }
         }
 
-        p {
-            margin: 0;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: #555;
-        }
-
-        .about-image {
+        .imagem-sobre {
             width: 100%;
             height: auto;
             object-fit: cover;
@@ -336,9 +325,16 @@
             margin-bottom: 16px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
+
+        p {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #555;
+        }
     }
 
-    .spacer-bottom {
+    .espaco-rodape {
         height: 40px;
     }
 }
