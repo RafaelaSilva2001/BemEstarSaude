@@ -1,35 +1,31 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './guard/auth-guard';
-import { AppRoutes } from './routes/app-routes';
 
 const routes: Routes = [
   {
-    path: AppRoutes.TABS,
+    path: 'tabs',
     loadChildren: () =>
       import('./tabs/tabs.module').then(m => m.TabsPageModule),
-    canActivate: [AuthGuard]
   },
   {
-    path: AppRoutes.LOGIN,
+    path: 'login',
     loadChildren: () =>
       import('./login/login.module').then(m => m.LoginPageModule),
   },
   {
-    path: AppRoutes.CADASTRO,
+    path: 'cadastro',
     loadChildren: () =>
       import('./cadastro/cadastro.module').then(m => m.CadastroPageModule),
-    
+  },
+  {
+    path: 'especialidades',
+    loadChildren: () =>
+      import('./especialidades/especialidades.module').then(m => m.EspecialidadesPageModule),
   },
   {
     path: '',
-    redirectTo: AppRoutes.LOGIN,
+    redirectTo: 'login',
     pathMatch: 'full',
-  },
-  {
-    path: AppRoutes.ESPECIALIDADES,
-    loadChildren: () => import('./especialidades/especialidades.module').then(m => m.EspecialidadesPageModule),
-    canActivate: [AuthGuard]
   },
 ];
 
