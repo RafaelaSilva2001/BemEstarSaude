@@ -52,8 +52,8 @@ export class CadastroPage {
     }
 
     // Verificar se já existe cadastro com este CPF
-    const cadastroExistente = await this.cadastroCRUD.obterCadastro();
-    if (cadastroExistente && cadastroExistente.getCpf() === this.cpf) {
+    const cadastroExistente = await this.cadastroCRUD.obterCadastroPorCpf(this.cpf);
+    if (cadastroExistente) {
       this.exibirAlerta('Atenção', 'Este CPF já está cadastrado.');
       return;
     }

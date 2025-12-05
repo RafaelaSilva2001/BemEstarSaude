@@ -44,19 +44,12 @@ export class LoginPage {
   async login() {
     this.mensagemErro = '';
 
-    const cadastro: Cadastro | null = await this.cadastroCRUD.obterCadastro();
+    const usuarioLogado = await this.cadastroCRUD.autenticar(this.email, this.senha);
 
-    if (!cadastro) {
-      this.mensagemErro = 'Nenhuma conta encontrada. Cadastre-se.';
-      return;
-    }
-
-    const infoLogin =
-      this.email.trim().toLowerCase() === (cadastro.getEmail() || '').trim().toLowerCase() &&
-      this.senha.trim() === (cadastro.getSenha() || '').trim();
-
-    if (infoLogin) {
+    if (usuarioLogado) {
       await this.storage.set('sessao_logada', true);
+      // Opcional: Salvar detalhes do usuário logado na sessão se necessário futuramente
+      // await this.storage.set('usuario_atual', usuarioLogado);
 
       this.email = '';
       this.senha = '';
