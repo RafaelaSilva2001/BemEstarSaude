@@ -40,9 +40,14 @@ export class CadastroPage {
   }
 
   async cadastrar() {
-    // Validação simples de campos obrigatórios
-    if (!this.nome || !this.cpf || !this.email || !this.senha) {
-      this.exibirAlerta('Erro', 'Preencha os campos obrigatórios.');
+    // Validação de todos os campos obrigatórios
+    if (
+      !this.nome || !this.cpf || !this.email || !this.senha ||
+      !this.dataNascimento || !this.genero || !this.foto ||
+      !this.logradouro || !this.numero || !this.bairro ||
+      !this.cidade || !this.estado || !this.cep
+    ) {
+      this.exibirAlerta('Erro', 'Por favor, preencha todos os campos obrigatórios, incluindo a foto.');
       return;
     }
 
