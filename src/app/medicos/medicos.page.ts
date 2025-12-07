@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { lista_medicos, Medico } from './medicos-dados';
 
 @Component({
@@ -15,8 +16,28 @@ export class MedicosPage {
   medicos: Medico[] = lista_medicos;
   medicosFiltrados: Medico[] = [];
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
+
     this.medicosFiltrados = [...this.medicos];
+
+    this.route.queryParams.subscribe(params => {
+      const esp = params['especialidade'];
+
+      if (esp) {
+        this.filtrarPorEspecialidade(esp);
+      } else {
+        this.medicosFiltrados = [...this.medicos];
+        this.textoBusca = '';
+      }
+    });
+  }
+
+  private filtrarPorEspecialidade(especialidade: string) {
+    this.textoBusca = especialidade; 
+
+    this.medicosFiltrados = this.medicos.filter(medico =>
+      medico.especialidade.toLowerCase() === especialidade.toLowerCase()
+    );
   }
 
   filtrarMedicos() {
@@ -35,10 +56,6 @@ export class MedicosPage {
   }
 
   estiloStatus(status: string): string {
-    if (status === 'Indisponível') {
-      return 'danger';
-    } else {
-      return 'success';
-    }
+    return status === 'Indisponível' ? 'danger' : 'success';
   }
 }
