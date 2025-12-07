@@ -66,7 +66,7 @@ export class CadastroPage {
       this.cidade,
       this.estado,
       this.cep,
-      this.foto
+      this.foto || ''
     );
 
     await this.cadastroCRUD.salvarCadastro(cadastro);

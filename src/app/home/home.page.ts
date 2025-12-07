@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { Storage } from '@ionic/storage-angular';
 import { CadastroCRUD } from '../_logica/persistencia/CadastroCRUD';
 import { Cadastro } from '../_logica/entidades/Cadastro';
@@ -20,7 +19,10 @@ export class HomePage {
 
   constructor(private storage: Storage) {
     this.cadastroCRUD = new CadastroCRUD(this.storage);
-    this.iniciar();
+  }
+
+  async ionViewWillEnter() {
+    await this.iniciar();
   }
 
   private async iniciar() {

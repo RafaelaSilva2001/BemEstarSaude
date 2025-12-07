@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
-import { AlertController, ViewWillEnter } from '@ionic/angular';
-
+import { AlertController } from '@ionic/angular';
 import { Consulta } from '../_logica/entidades/Consulta';
 import { ConsultaCRUD } from '../_logica/persistencia/ConsultaCRUD';
 import { CadastroCRUD } from '../_logica/persistencia/CadastroCRUD';
@@ -13,22 +12,20 @@ import { Cadastro } from '../_logica/entidades/Cadastro';
   styleUrls: ['./consulta.page.scss'],
   standalone: false,
 })
-export class ConsultaPage implements ViewWillEnter {
+export class ConsultaPage {
 
-  consultas: Consulta[] = [];        // todas no storage
+  consultas: Consulta[] = [];
 
-  minhasConsultas: Consulta[] = [];  // consultas que o usuário fez para ELE
-  outrasConsultas: Consulta[] = [];  // consultas que o usuário fez para OUTRAS PESSOAS
+  minhasConsultas: Consulta[] = [];
+  outrasConsultas: Consulta[] = [];
 
   usuarioLogado: Cadastro | null = null;
 
   private consultaCRUD: ConsultaCRUD;
   private cadastroCRUD: CadastroCRUD;
 
-  constructor(
-    private storage: Storage,
-    private alertCtrl: AlertController
-  ) {
+  constructor( private storage: Storage, private alertCtrl: AlertController) 
+  {
     this.consultaCRUD = new ConsultaCRUD(this.storage);
     this.cadastroCRUD = new CadastroCRUD(this.storage);
   }
@@ -37,9 +34,6 @@ export class ConsultaPage implements ViewWillEnter {
     this.iniciar();
   }
 
-  // -----------------------------------------
-  // Inicialização
-  // -----------------------------------------
   async iniciar() {
     await this.storage.create();
 

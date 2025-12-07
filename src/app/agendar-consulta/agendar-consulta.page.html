@@ -62,8 +62,8 @@
           </label>
 
           <ion-item class="paciente-consulta-item" lines="none">
-            <ion-input placeholder="000.000.000-00" inputmode="numeric" [(ngModel)]="paciente.cpf"
-              (ionInput)="maskCPF($event)">
+            <ion-input placeholder="000.000.000-00" type="text" [(ngModel)]="paciente.cpf"
+              (ionInput)="maskCPF($event)" maxlength="14">
             </ion-input>
           </ion-item>
         </section>

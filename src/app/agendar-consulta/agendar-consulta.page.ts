@@ -4,6 +4,7 @@ import { lista_medicos, Medico } from '../medicos/medicos-dados';
 import { Storage } from '@ionic/storage-angular';
 import { Consulta } from '../_logica/entidades/Consulta';
 import { Router } from '@angular/router';
+import { CadastroCRUD } from '../_logica/persistencia/CadastroCRUD';
 
 @Component({
   selector: 'app-agendar-consulta',
@@ -42,11 +43,15 @@ export class AgendarConsultaPage {
 
   consultas: Consulta[] = [];
 
+  private cadastroCRUD: CadastroCRUD;
+
   constructor(
     private toastCtrl: ToastController,
     private storage: Storage,
     private router: Router
   ) {
+    this.cadastroCRUD = new CadastroCRUD(this.storage); 
+
     this.preencherEspecialidades();
     this.medicosFiltrados = [...this.medicos];
     this.iniciar();
@@ -54,6 +59,7 @@ export class AgendarConsultaPage {
 
   async iniciar() {
     await this.storage.create();
+    await this.cadastroCRUD.inicializar();   
     await this.carregarConsultas();
   }
 
@@ -232,24 +238,16 @@ export class AgendarConsultaPage {
       const cpfLogado = await this.storage.get('cpfLogado');
 
       if (cpfLogado) {
-        const usuarios: any[] = await this.storage.get('usuarios');
+        const cadastro = await this.cadastroCRUD.obterCadastroPorCpf(cpfLogado);
 
-        if (usuarios && Array.isArray(usuarios)) {
-          const cpfBase = String(cpfLogado).replace(/\D/g, '');
-
-          const cadastro = usuarios.find(u =>
-            String(u.cpf || '').replace(/\D/g, '') === cpfBase
-          );
-
-          if (cadastro) {
-            return {
-              nome: cadastro.nome,
-              cpf: cadastro.cpf,
-              cep: cadastro.cep,
-              genero: cadastro.genero,
-              dataNascimento: cadastro.dataNascimento,
-            };
-          }
+        if (cadastro) {
+          return {
+            nome: cadastro.getNome(),
+            cpf: cadastro.getCpf(),
+            cep: cadastro.getCep(),
+            genero: cadastro.getGenero(),
+            dataNascimento: cadastro.getDataNascimento(),
+          };
         }
       }
     }

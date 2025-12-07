@@ -149,7 +149,7 @@
 
         <ion-item>
           <ion-input label="CEP" labelPlacement="floating" placeholder="00000-000" [(ngModel)]="cep"
-            (ionInput)="mascaraCEP($event)" required="true">
+            (ionInput)="mascaraCEP($event)" maxlength="9" required="true">
           </ion-input>
         </ion-item>
 

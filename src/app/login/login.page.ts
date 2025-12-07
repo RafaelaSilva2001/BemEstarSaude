@@ -18,10 +18,8 @@ export class LoginPage {
 
   private cadastroCRUD: CadastroCRUD;
 
-  constructor(
-    private storage: Storage,
-    private router: Router
-  ) {
+  constructor( private storage: Storage, private router: Router) 
+  {
     this.cadastroCRUD = new CadastroCRUD(this.storage);
     this.iniciar();
   }

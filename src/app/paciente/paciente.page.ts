@@ -38,7 +38,6 @@ export class PacientePage {
     const cpfLogado = await this.storage.get('cpfLogado');
 
     if (!cpfLogado) {
-      console.log('Nenhum CPF logado encontrado. Redirecionando para login.');
       this.router.navigateByUrl('/login', { replaceUrl: true });
       return;
     }
@@ -48,7 +47,6 @@ export class PacientePage {
     const cadastro: Cadastro | null = await this.cadastroCRUD.obterCadastroPorCpf(this.cpfLogado);
 
     if (!cadastro) {
-      console.log('Nenhum cadastro encontrado para o CPF logado.');
       return;
     }
 
@@ -173,7 +171,6 @@ export class PacientePage {
 
   async carregarDadosParaEdicao() {
     if (!this.cpfLogado) {
-      console.log('CPF logado não encontrado ao carregar dados para edição.');
       return;
     }
 
@@ -200,13 +197,11 @@ export class PacientePage {
     }
 
     if (!this.cpfLogado) {
-      console.log('CPF logado não encontrado ao salvar edição.');
       return;
     }
 
     const cadastro = await this.cadastroCRUD.obterCadastroPorCpf(this.cpfLogado);
     if (!cadastro) {
-      console.log('Cadastro não encontrado ao salvar edição.');
       return;
     }
 
