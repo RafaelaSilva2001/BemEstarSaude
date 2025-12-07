@@ -120,7 +120,8 @@ export class AgendarConsultaPage {
           c.medico,
           c.dataConsulta,
           c.horarioConsulta,
-          status           
+          status,
+          c.cpfUsuario
         );
 
         this.consultas.push(consulta);
@@ -143,7 +144,8 @@ export class AgendarConsultaPage {
         medico: c.getMedico(),
         dataConsulta: c.getDataConsulta(),
         horarioConsulta: c.getHorarioConsulta(),
-        status: c.getStatus()   
+        status: c.getStatus(),
+        cpfUsuario: c.getCpfUsuario(),
       };
 
       dados.push(obj);
@@ -207,7 +209,6 @@ export class AgendarConsultaPage {
     this.paciente.dataNascimento = value;
   }
 
-
   get formularioValido() {
     const dadosConsulta =
       !!this.especialidadeSelecionada &&
@@ -228,20 +229,37 @@ export class AgendarConsultaPage {
 
   private async obterDadosPacienteParaConsulta() {
     if (this.consultaPara === 'mim') {
-      const cadastroSalvo = await this.storage.get('cadastro');
+      const cpfLogado = await this.storage.get('cpfLogado');
 
-      if (cadastroSalvo) {
-        return {
-          nome: cadastroSalvo.nome,
-          cpf: cadastroSalvo.cpf,
-          cep: cadastroSalvo.cep,
-          genero: cadastroSalvo.genero,
-          dataNascimento: cadastroSalvo.dataNascimento,
-        };
+      if (cpfLogado) {
+        const usuarios: any[] = await this.storage.get('usuarios');
+
+        if (usuarios && Array.isArray(usuarios)) {
+          const cpfBase = String(cpfLogado).replace(/\D/g, '');
+
+          const cadastro = usuarios.find(u =>
+            String(u.cpf || '').replace(/\D/g, '') === cpfBase
+          );
+
+          if (cadastro) {
+            return {
+              nome: cadastro.nome,
+              cpf: cadastro.cpf,
+              cep: cadastro.cep,
+              genero: cadastro.genero,
+              dataNascimento: cadastro.dataNascimento,
+            };
+          }
+        }
       }
     }
 
     return { ...this.paciente };
+  }
+
+  private async obterCpfUsuarioLogado(): Promise<string> {
+    const cpfLogado = await this.storage.get('cpfLogado');
+    return cpfLogado || '';
   }
 
   async confirmarAgendamento() {
@@ -257,6 +275,7 @@ export class AgendarConsultaPage {
     }
 
     const dadosPaciente = await this.obterDadosPacienteParaConsulta();
+    const cpfUsuario = await this.obterCpfUsuarioLogado();
 
     const novaConsulta = new Consulta(
       this.consultaPara,
@@ -268,7 +287,9 @@ export class AgendarConsultaPage {
       this.especialidadeSelecionada || '',
       this.medicoSelecionado || '',
       this.dataConsulta || '',
-      this.horarioConsulta || ''
+      this.horarioConsulta || '',
+      'Agendada',
+      cpfUsuario
     );
 
     this.consultas.push(novaConsulta);
@@ -297,10 +318,11 @@ export class AgendarConsultaPage {
         dataConsulta: novaConsulta.getDataConsulta(),
         horarioConsulta: novaConsulta.getHorarioConsulta(),
       },
+      usuarioResponsavel: cpfUsuario,
     });
 
     this.router.navigate(['/tabs/consulta']).then(() => {
-      window.location.reload();  
+      window.location.reload();
     });
   }
 

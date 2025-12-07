@@ -18,22 +18,37 @@ export class PacientePage {
   cpf: string = '';
   genero: string = '';
   endereco: string = '';
-  foto: string = ''; 
+  foto: string = '';
 
   private cadastroCRUD: CadastroCRUD;
+  private cpfLogado: string = '';
 
   constructor(private storage: Storage, private router: Router) {
     this.cadastroCRUD = new CadastroCRUD(this.storage);
-    this.iniciar();
+  }
+
+  async ionViewWillEnter() {
+    await this.iniciar();
   }
 
   private async iniciar() {
+    await this.storage.create();
     await this.cadastroCRUD.inicializar();
 
-    const cadastro: Cadastro | null = await this.cadastroCRUD.obterCadastro();
+    const cpfLogado = await this.storage.get('cpfLogado');
+
+    if (!cpfLogado) {
+      console.log('Nenhum CPF logado encontrado. Redirecionando para login.');
+      this.router.navigateByUrl('/login', { replaceUrl: true });
+      return;
+    }
+
+    this.cpfLogado = cpfLogado;
+
+    const cadastro: Cadastro | null = await this.cadastroCRUD.obterCadastroPorCpf(this.cpfLogado);
 
     if (!cadastro) {
-      console.log('Nenhum cadastro encontrado');
+      console.log('Nenhum cadastro encontrado para o CPF logado.');
       return;
     }
 
@@ -42,7 +57,7 @@ export class PacientePage {
     this.email = cadastro.getEmail();
     this.cpf = cadastro.getCpf();
     this.genero = cadastro.getGenero();
-    this.foto = cadastro.getFoto();
+    this.foto = cadastro.getFoto() || '';
 
     const partesEndereco: string[] = [];
 
@@ -58,7 +73,11 @@ export class PacientePage {
       partesEndereco.push(cadastro.getBairro());
     }
 
-    const cidadeEstado = `${cadastro.getCidade() || ''}${cadastro.getCidade() && cadastro.getEstado() ? ' - ' : ''}${cadastro.getEstado() || ''}`;
+    const cidadeEstado =
+      `${cadastro.getCidade() || ''}` +
+      `${cadastro.getCidade() && cadastro.getEstado() ? ' - ' : ''}` +
+      `${cadastro.getEstado() || ''}`;
+
     if (cidadeEstado.trim()) {
       partesEndereco.push(cidadeEstado);
     }
@@ -71,9 +90,8 @@ export class PacientePage {
   }
 
   async logout() {
-    await this.storage.create();
-    await this.storage.remove('sessao_logada');
-
+    await this.storage.remove('sessaoLogada');
+    await this.storage.remove('cpfLogado');
     this.router.navigateByUrl('/login', { replaceUrl: true });
   }
 
@@ -105,7 +123,6 @@ export class PacientePage {
     return data;
   }
 
-  // --- Lógica de Foto ---
   triggerFileInput() {
     const fileInput = document.getElementById('fileInput') as HTMLElement;
     fileInput.click();
@@ -115,23 +132,22 @@ export class PacientePage {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.foto = e.target.result; // Atualiza a visualização imediatamente
-        this.salvarFotoAutomaticamente(); // Opcional: salvar assim que escolhe
+      reader.onload = async (e: any) => {
+        this.foto = e.target.result;
+
+        if (!this.cpfLogado) return;
+
+        const cadastro = await this.cadastroCRUD.obterCadastroPorCpf(this.cpfLogado);
+        if (cadastro) {
+          cadastro.setFoto(this.foto);
+          await this.cadastroCRUD.salvarCadastro(cadastro);
+        }
       };
       reader.readAsDataURL(file);
     }
   }
 
-  async salvarFotoAutomaticamente() {
-    const cadastro = await this.cadastroCRUD.obterCadastro();
-    if (cadastro) {
-      cadastro.setFoto(this.foto);
-      await this.cadastroCRUD.salvarCadastro(cadastro);
-    }
-  }
-
-  // Editar informações do paciente
+  // --- Edição ---
   isModalOpen = false;
   editNome = '';
   editCpf = '';
@@ -147,11 +163,6 @@ export class PacientePage {
   editSenha = '';
 
   abrirModalEdicao() {
-    this.editNome = this.nome;
-    this.editCpf = this.cpf;
-    this.editEmail = this.email;
-    this.editDataNascimento = this.dataNascimento;
-    this.editGenero = this.genero;
     this.carregarDadosParaEdicao();
     this.isModalOpen = true;
   }
@@ -161,7 +172,12 @@ export class PacientePage {
   }
 
   async carregarDadosParaEdicao() {
-    const cadastro = await this.cadastroCRUD.obterCadastro();
+    if (!this.cpfLogado) {
+      console.log('CPF logado não encontrado ao carregar dados para edição.');
+      return;
+    }
+
+    const cadastro = await this.cadastroCRUD.obterCadastroPorCpf(this.cpfLogado);
     if (cadastro) {
       this.editNome = cadastro.getNome();
       this.editCpf = cadastro.getCpf();
@@ -183,28 +199,41 @@ export class PacientePage {
       return;
     }
 
-    const novoCadastro = new Cadastro(
-      this.editNome,
-      this.editCpf,
-      this.editEmail,
-      this.editDataNascimento,
-      this.editGenero,
-      this.editSenha,
-      this.editLogradouro,
-      this.editNumero,
-      this.editBairro,
-      this.editCidade,
-      this.editEstado,
-      this.editCep,
-      this.foto 
-    );
+    if (!this.cpfLogado) {
+      console.log('CPF logado não encontrado ao salvar edição.');
+      return;
+    }
 
-    await this.cadastroCRUD.salvarCadastro(novoCadastro);
+    const cadastro = await this.cadastroCRUD.obterCadastroPorCpf(this.cpfLogado);
+    if (!cadastro) {
+      console.log('Cadastro não encontrado ao salvar edição.');
+      return;
+    }
+
+    cadastro.setNome(this.editNome);
+    cadastro.setCpf(this.editCpf);
+    cadastro.setEmail(this.editEmail);
+    cadastro.setDataNascimento(this.editDataNascimento);
+    cadastro.setGenero(this.editGenero);
+    cadastro.setSenha(this.editSenha);
+    cadastro.setLogradouro(this.editLogradouro);
+    cadastro.setNumero(this.editNumero);
+    cadastro.setBairro(this.editBairro);
+    cadastro.setCidade(this.editCidade);
+    cadastro.setEstado(this.editEstado);
+    cadastro.setCep(this.editCep);
+    cadastro.setFoto(this.foto);
+
+    await this.cadastroCRUD.salvarCadastro(cadastro);
+
+    this.cpfLogado = this.editCpf;
+    await this.storage.set('cpfLogado', this.cpfLogado);
+
     await this.iniciar();
     this.fecharModal();
   }
 
-  // Máscaras (reutilizadas do cadastro)
+  // Máscaras
   mascaraCPF(event: any) {
     let value: string = event.detail.value || '';
     value = value.replace(/\D/g, '').substring(0, 11);

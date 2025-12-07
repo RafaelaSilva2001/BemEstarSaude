@@ -34,7 +34,8 @@ export class ConsultaCRUD {
                     c.medico,
                     c.dataConsulta,
                     c.horarioConsulta,
-                    status              
+                    status,
+                    c.cpfUsuario             
                 );
 
                 this.consultas.push(consulta);

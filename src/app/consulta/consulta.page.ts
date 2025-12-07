@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
+import { AlertController, ViewWillEnter } from '@ionic/angular';
+
 import { Consulta } from '../_logica/entidades/Consulta';
 import { ConsultaCRUD } from '../_logica/persistencia/ConsultaCRUD';
 import { CadastroCRUD } from '../_logica/persistencia/CadastroCRUD';
 import { Cadastro } from '../_logica/entidades/Cadastro';
-import { AlertController, ViewWillEnter } from '@ionic/angular';
 
 @Component({
   selector: 'app-consulta',
@@ -13,9 +14,12 @@ import { AlertController, ViewWillEnter } from '@ionic/angular';
   standalone: false,
 })
 export class ConsultaPage implements ViewWillEnter {
-  consultas: Consulta[] = [];
-  minhasConsultas: Consulta[] = [];
-  outrasConsultas: Consulta[] = [];
+
+  consultas: Consulta[] = [];        // todas no storage
+
+  minhasConsultas: Consulta[] = [];  // consultas que o usuário fez para ELE
+  outrasConsultas: Consulta[] = [];  // consultas que o usuário fez para OUTRAS PESSOAS
+
   usuarioLogado: Cadastro | null = null;
 
   private consultaCRUD: ConsultaCRUD;
@@ -33,37 +37,67 @@ export class ConsultaPage implements ViewWillEnter {
     this.iniciar();
   }
 
+  // -----------------------------------------
+  // Inicialização
+  // -----------------------------------------
   async iniciar() {
+    await this.storage.create();
+
     await this.consultaCRUD.inicializar();
     await this.cadastroCRUD.inicializar();
 
-    this.usuarioLogado = await this.cadastroCRUD.obterCadastro();
-    this.consultas = await this.consultaCRUD.obterConsultas();
+    const cpfLogado: string | null = await this.storage.get('cpfLogado');
 
-    this.filtrarConsultas();
-  }
-
-  private filtrarConsultas() {
-    this.minhasConsultas = [];
-    this.outrasConsultas = [];
-
-    if (!this.usuarioLogado) {
-      // Se não tiver usuário logado (erro?), mostra tudo em "Outras" ou trata como preferir
-      this.outrasConsultas = [...this.consultas];
+    if (!cpfLogado) {
+      console.log('Nenhum CPF logado. Não é possível carregar o relatório.');
+      this.usuarioLogado = null;
+      this.consultas = [];
+      this.minhasConsultas = [];
+      this.outrasConsultas = [];
       return;
     }
 
-    const cpfLogado = this.usuarioLogado.getCpf();
+    this.usuarioLogado = await this.cadastroCRUD.obterCadastroPorCpf(cpfLogado);
 
-    for (const c of this.consultas) {
-      if (c.getCpfPaciente() === cpfLogado) {
-        this.minhasConsultas.push(c);
-      } else {
-        this.outrasConsultas.push(c);
-      }
-    }
+    // Carrega TODAS as consultas do storage
+    this.consultas = await this.consultaCRUD.obterConsultas();
+
+    // Filtra as consultas feitas pelo usuário e separa em "minhas" e "outras"
+    this.filtrarConsultas(cpfLogado);
   }
 
+  // -----------------------------------------
+  // Filtro:
+  // 1) pega só consultas que o usuário FEZ (cpfUsuario = cpfLogado)
+  // 2) dentro dessas, separa:
+  //    - MINHAS: cpfPaciente = cpfLogado
+  //    - OUTRAS: cpfPaciente != cpfLogado
+  // -----------------------------------------
+  private filtrarConsultas(cpfLogado: string) {
+    const cpfBase = cpfLogado.replace(/\D/g, ''); // só dígitos
+
+    // primeiro, pega apenas consultas feitas pelo usuário logado
+    const consultasDoUsuario = this.consultas.filter((c) => {
+      const cpfUsuario = (c.getCpfUsuario() || '').replace(/\D/g, '');
+      return cpfUsuario === cpfBase;
+    });
+
+    // MINHAS CONSULTAS: paciente é o próprio usuário
+    this.minhasConsultas = consultasDoUsuario.filter((c) => {
+      const cpfPaciente = (c.getCpfPaciente() || '').replace(/\D/g, '');
+      return cpfPaciente === cpfBase;
+    });
+
+    // OUTRAS CONSULTAS: paciente é outra pessoa (mãe, pai, filho, etc.)
+    this.outrasConsultas = consultasDoUsuario.filter((c) => {
+      const cpfPaciente = (c.getCpfPaciente() || '').replace(/\D/g, '');
+      return cpfPaciente !== cpfBase;
+    });
+  }
+
+  // -----------------------------------------
+  // Formatação de data
+  // -----------------------------------------
   formatarDataConsulta(data: string | null): string {
     if (!data) return '';
 
@@ -80,6 +114,9 @@ export class ConsultaPage implements ViewWillEnter {
     return data;
   }
 
+  // -----------------------------------------
+  // Gravar consultas no storage
+  // -----------------------------------------
   private async salvarConsultasNoStorage(): Promise<void> {
     const dados: any[] = [];
 
@@ -96,12 +133,16 @@ export class ConsultaPage implements ViewWillEnter {
         dataConsulta: c.getDataConsulta(),
         horarioConsulta: c.getHorarioConsulta(),
         status: c.getStatus ? c.getStatus() : 'Agendada',
+        cpfUsuario: c.getCpfUsuario(),
       });
     }
 
     await this.storage.set('consultas', dados);
   }
 
+  // -----------------------------------------
+  // Cancelar consulta
+  // -----------------------------------------
   async confirmarCancelamento(consulta: Consulta) {
     const alert = await this.alertCtrl.create({
       header: 'Cancelar consulta',
@@ -124,10 +165,16 @@ export class ConsultaPage implements ViewWillEnter {
   private async cancelarConsulta(consulta: Consulta) {
     consulta.setStatus('Cancelada');
     await this.salvarConsultasNoStorage();
-    // Não precisa refiltrar pois a referência do objeto é a mesma, 
-    // mas se mudasse de lista precisaria. Aqui só muda status.
+
+    const cpfLogado: string | null = await this.storage.get('cpfLogado');
+    if (cpfLogado) {
+      this.filtrarConsultas(cpfLogado);
+    }
   }
 
+  // -----------------------------------------
+  // Excluir consulta
+  // -----------------------------------------
   async confirmarExclusao(consulta: Consulta) {
     const alert = await this.alertCtrl.create({
       header: 'Excluir consulta',
@@ -148,23 +195,13 @@ export class ConsultaPage implements ViewWillEnter {
   }
 
   private async excluirConsulta(consulta: Consulta) {
-    // Remove da lista geral
-    const index = this.consultas.indexOf(consulta);
-    if (index > -1) {
-      this.consultas.splice(index, 1);
-    }
-
-    // Remove das listas filtradas
-    const indexMinhas = this.minhasConsultas.indexOf(consulta);
-    if (indexMinhas > -1) {
-      this.minhasConsultas.splice(indexMinhas, 1);
-    }
-
-    const indexOutras = this.outrasConsultas.indexOf(consulta);
-    if (indexOutras > -1) {
-      this.outrasConsultas.splice(indexOutras, 1);
-    }
+    this.consultas = this.consultas.filter(c => c !== consulta);
 
     await this.salvarConsultasNoStorage();
+
+    const cpfLogado: string | null = await this.storage.get('cpfLogado');
+    if (cpfLogado) {
+      this.filtrarConsultas(cpfLogado);
+    }
   }
 }

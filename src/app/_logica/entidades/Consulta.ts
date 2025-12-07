@@ -9,7 +9,8 @@ export class Consulta {
     private medico: string;
     private dataConsulta: string;
     private horarioConsulta: string;
-    private status: 'Agendada' | 'Cancelada';  
+    private status: 'Agendada' | 'Cancelada';
+    private cpfUsuario: string;
 
     constructor(
         consultaPara: string,
@@ -22,7 +23,8 @@ export class Consulta {
         medico: string,
         dataConsulta: string,
         horarioConsulta: string,
-        status: 'Agendada' | 'Cancelada' = 'Agendada' 
+        status: 'Agendada' | 'Cancelada' = 'Agendada',
+        cpfUsuario: string
     ) {
         this.consultaPara = consultaPara;
         this.nomePaciente = nomePaciente;
@@ -35,6 +37,7 @@ export class Consulta {
         this.dataConsulta = dataConsulta;
         this.horarioConsulta = horarioConsulta;
         this.status = status;
+        this.cpfUsuario = cpfUsuario || cpfPaciente;
     }
 
     getConsultaPara() { return this.consultaPara; }
@@ -47,8 +50,10 @@ export class Consulta {
     getMedico() { return this.medico; }
     getDataConsulta() { return this.dataConsulta; }
     getHorarioConsulta() { return this.horarioConsulta; }
-    getStatus(): 'Agendada' | 'Cancelada' { return this.status;
-    }
+    getStatus(): 'Agendada' | 'Cancelada' { return this.status; }
+    getCpfUsuario(): string { return this.cpfUsuario; }
 
-    setStatus(status: 'Agendada' | 'Cancelada') { this.status = status;}
+    setStatus(status: 'Agendada' | 'Cancelada') {
+        this.status = status;
+    }
 }

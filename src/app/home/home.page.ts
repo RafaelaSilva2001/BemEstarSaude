@@ -24,9 +24,21 @@ export class HomePage {
   }
 
   private async iniciar() {
+    await this.storage.create();
+
     await this.cadastroCRUD.inicializar();
 
-    const cadastro: Cadastro | null = await this.cadastroCRUD.obterCadastro();
+    const cpfLogado: string | null = await this.storage.get('cpfLogado');
+
+    let cadastro: Cadastro | null = null;
+
+    if (cpfLogado) {
+      cadastro = await this.cadastroCRUD.obterCadastroPorCpf(cpfLogado);
+    }
+
+    if (!cadastro) {
+      cadastro = await this.cadastroCRUD.obterCadastro();
+    }
 
     if (cadastro) {
       this.nome = cadastro.getNome();

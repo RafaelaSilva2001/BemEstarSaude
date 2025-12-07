@@ -40,16 +40,16 @@ export class CadastroPage {
   }
 
   async cadastrar() {
-    // Validação simples de campos obrigatórios
-    if (!this.nome || !this.cpf || !this.email || !this.senha) {
-      this.exibirAlerta('Erro', 'Preencha os campos obrigatórios.');
+    if (!this.nome || !this.cpf || !this.email || !this.senha || !this.dataNascimento 
+      || !this.genero || !this.logradouro || !this.numero || !this.bairro ||
+      !this.cidade || !this.estado || !this.cep) {
+      await this.exibirAlerta('Erro', 'Preencha os campos obrigatórios.');
       return;
     }
 
-    // Verificar se já existe cadastro com este CPF
-    const cadastroExistente = await this.cadastroCRUD.obterCadastro();
-    if (cadastroExistente && cadastroExistente.getCpf() === this.cpf) {
-      this.exibirAlerta('Atenção', 'Este CPF já está cadastrado.');
+    const cadastroExistente = await this.cadastroCRUD.obterCadastroPorCpf(this.cpf);
+    if (cadastroExistente) {
+      await this.exibirAlerta('Atenção', 'Este CPF já está cadastrado. Informe um novo CPF');
       return;
     }
 
@@ -81,7 +81,7 @@ export class CadastroPage {
       buttons: ['OK']
     });
     await alert.present();
-    return alert.onDidDismiss(); // Aguarda o usuário fechar o alerta
+    return alert.onDidDismiss(); 
   }
 
   // Máscaras

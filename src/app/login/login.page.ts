@@ -30,7 +30,7 @@ export class LoginPage {
     await this.storage.create();
     await this.cadastroCRUD.inicializar();
 
-    const sessaoLogada = await this.storage.get('sessao_logada');
+    const sessaoLogada = await this.storage.get('sessaoLogada');
 
     if (sessaoLogada === true) {
       this.router.navigateByUrl('/tabs/home', { replaceUrl: true });
@@ -44,32 +44,48 @@ export class LoginPage {
   async login() {
     this.mensagemErro = '';
 
-    const cadastro: Cadastro | null = await this.cadastroCRUD.obterCadastro();
+    await this.storage.create();
+    await this.cadastroCRUD.inicializar();
 
-    if (!cadastro) {
-      this.mensagemErro = 'Nenhuma conta encontrada. Cadastre-se.';
+    const todosCadastros: Cadastro[] = await this.cadastroCRUD.obterTodosCadastros();
+
+    if (!todosCadastros || todosCadastros.length === 0) {
+      this.mensagemErro = 'Nenhum usuário cadastrado. Crie sua conta primeiro.';
       return;
     }
 
-    const infoLogin =
-      this.email.trim().toLowerCase() === (cadastro.getEmail() || '').trim().toLowerCase() &&
-      this.senha.trim() === (cadastro.getSenha() || '').trim();
+    const emailInformado = this.email.trim().toLowerCase();
+    const senhaInformada = this.senha.trim();
 
-    if (infoLogin) {
-      await this.storage.set('sessao_logada', true);
+    let usuarioEncontrado: Cadastro | null = null;
 
-      this.email = '';
-      this.senha = '';
+    for (const usuario of todosCadastros) {
+      const emailCadastrado = (usuario.getEmail() || '').trim().toLowerCase();
+      const senhaCadastrada = (usuario.getSenha() || '').trim();
 
-      this.router.navigateByUrl('/tabs/home', { replaceUrl: true });
-    } else {
-      this.mensagemErro = 'E-mail e/ou senha inválidos.';
+      if (emailInformado === emailCadastrado && senhaInformada === senhaCadastrada) {
+        usuarioEncontrado = usuario;
+        break;
+      }
     }
+
+    if (!usuarioEncontrado) {
+      this.mensagemErro = 'E-mail e/ou senha inválidos.';
+      return;
+    }
+
+    await this.storage.set('sessaoLogada', true);
+    await this.storage.set('cpfLogado', usuarioEncontrado.getCpf());
+
+    this.email = '';
+    this.senha = '';
+
+    this.router.navigateByUrl('/tabs/home', { replaceUrl: true });
   }
 
   async logout() {
-    await this.storage.remove('sessao_logada');
-
+    await this.storage.remove('sessaoLogada');
+    await this.storage.remove('cpfLogado');
     this.router.navigateByUrl('/login', { replaceUrl: true });
   }
 }

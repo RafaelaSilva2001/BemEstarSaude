@@ -1,8 +1,5 @@
 <ion-header class="ion-cabecalho">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button slot="start" defaultHref="/login" text=""></ion-back-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -40,30 +37,30 @@
         </ion-item-divider>
 
         <ion-item>
-          <ion-input label="Nome completo" labelPlacement="floating" placeholder="Digite seu nome" [(ngModel)]="nome">
+          <ion-input label="Nome completo" labelPlacement="floating" placeholder="Digite seu nome" [(ngModel)]="nome" required="true">
           </ion-input>
         </ion-item>
 
         <ion-item>
           <ion-input type="email" label="E-mail" labelPlacement="floating" placeholder="Digite seu e-mail"
-            [(ngModel)]="email">
+            [(ngModel)]="email" required="true">
           </ion-input>
         </ion-item>
 
         <ion-item>
           <ion-input label="CPF" labelPlacement="floating" placeholder="000.000.000-00" [(ngModel)]="cpf"
-            (ionInput)="mascaraCPF($event)">
+            (ionInput)="mascaraCPF($event)" maxlength="14" required="true">
           </ion-input>
         </ion-item>
 
         <ion-item>
           <ion-input label="Data de nascimento" labelPlacement="floating" placeholder="DD/MM/AAAA"
-            [(ngModel)]="dataNascimento" (ionInput)="mascaraDataNasc($event)">
+            [(ngModel)]="dataNascimento" (ionInput)="mascaraDataNasc($event)" required="true">
           </ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-select label="Gênero" labelPlacement="floating" placeholder="Selecione" [(ngModel)]="genero">
+          <ion-select label="Gênero" labelPlacement="floating" placeholder="Selecione" [(ngModel)]="genero" required="true">
             <ion-select-option value="Masculino">Masculino</ion-select-option>
             <ion-select-option value="Feminino">Feminino</ion-select-option>
             <ion-select-option value="Outro">Outro</ion-select-option>
@@ -73,7 +70,7 @@
 
         <ion-item>
           <ion-input type="password" label="Senha" labelPlacement="floating" placeholder="Digite sua senha"
-            [(ngModel)]="senha">
+            [(ngModel)]="senha" required="true">
           </ion-input>
         </ion-item>
 
@@ -83,7 +80,7 @@
 
         <ion-item>
           <ion-input label="Logradouro" labelPlacement="floating" placeholder="Rua, Avenida, etc."
-            [(ngModel)]="logradouro">
+            [(ngModel)]="logradouro" required="true">
           </ion-input>
         </ion-item>
 
@@ -91,14 +88,14 @@
           <ion-row>
             <ion-col size="4">
               <ion-item>
-                <ion-input label="Número" placeholder="Número" labelPlacement="floating" [(ngModel)]="numero">
+                <ion-input label="Número" placeholder="Número" labelPlacement="floating" [(ngModel)]="numero" required="true">
                 </ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col size="8">
               <ion-item>
-                <ion-input label="Bairro" placeholder="Bairro" labelPlacement="floating" [(ngModel)]="bairro">
+                <ion-input label="Bairro" placeholder="Bairro" labelPlacement="floating" [(ngModel)]="bairro" required="true">
                 </ion-input>
               </ion-item>
             </ion-col>
@@ -109,14 +106,14 @@
           <ion-row>
             <ion-col size="7">
               <ion-item>
-                <ion-input label="Cidade" placeholder="Cidade" labelPlacement="floating" [(ngModel)]="cidade">
+                <ion-input label="Cidade" placeholder="Cidade" labelPlacement="floating" [(ngModel)]="cidade" required="true">
                 </ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col size="5">
               <ion-item>
-                <ion-select label="Estado" labelPlacement="floating" placeholder="UF" [(ngModel)]="estado">
+                <ion-select label="Estado" labelPlacement="floating" placeholder="UF" [(ngModel)]="estado" required="true">
                   <ion-select-option value="AC">AC</ion-select-option>
                   <ion-select-option value="AL">AL</ion-select-option>
                   <ion-select-option value="AP">AP</ion-select-option>
@@ -152,7 +149,7 @@
 
         <ion-item>
           <ion-input label="CEP" labelPlacement="floating" placeholder="00000-000" [(ngModel)]="cep"
-            (ionInput)="mascaraCEP($event)">
+            (ionInput)="mascaraCEP($event)" required="true">
           </ion-input>
         </ion-item>
 

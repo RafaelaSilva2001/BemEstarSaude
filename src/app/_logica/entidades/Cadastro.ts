@@ -14,7 +14,7 @@ export class Cadastro {
     private estado: string;
     private cep: string;
 
-    private foto: string; // Base64 string
+    private foto: string;
 
     constructor(
         nome: string,
@@ -29,7 +29,7 @@ export class Cadastro {
         cidade: string,
         estado: string,
         cep: string,
-        foto: string = '' // Default empty
+        foto: string = '' 
     ) {
         this.nome = nome;
         this.cpf = cpf;
