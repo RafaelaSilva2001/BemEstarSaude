@@ -41,6 +41,8 @@ export class AgendarConsultaPage {
   dataConsulta: string | null = null;
   horarioConsulta: string | null = null;
 
+  dataMinima: string = new Date().toISOString().split('T')[0];
+
   consultas: Consulta[] = [];
 
   private cadastroCRUD: CadastroCRUD;
@@ -50,7 +52,7 @@ export class AgendarConsultaPage {
     private storage: Storage,
     private router: Router
   ) {
-    this.cadastroCRUD = new CadastroCRUD(this.storage); 
+    this.cadastroCRUD = new CadastroCRUD(this.storage);
 
     this.preencherEspecialidades();
     this.medicosFiltrados = [...this.medicos];
@@ -59,7 +61,7 @@ export class AgendarConsultaPage {
 
   async iniciar() {
     await this.storage.create();
-    await this.cadastroCRUD.inicializar();   
+    await this.cadastroCRUD.inicializar();
     await this.carregarConsultas();
   }
 
@@ -260,6 +262,20 @@ export class AgendarConsultaPage {
     return cpfLogado || '';
   }
 
+  async validarData() {
+    if (this.dataConsulta && this.dataConsulta < this.dataMinima) {
+      const toast = await this.toastCtrl.create({
+        message: 'A data da consulta não pode ser anterior a hoje.',
+        duration: 2000,
+        position: 'top',
+        color: 'warning'
+      });
+      await toast.present();
+
+      this.dataConsulta = null; // Limpa o campo
+    }
+  }
+
   async confirmarAgendamento() {
     if (!this.formularioValido) {
       const toastErro = await this.toastCtrl.create({
@@ -267,6 +283,17 @@ export class AgendarConsultaPage {
         duration: 1500,
         position: 'top',
         color: 'danger',
+      });
+      await toastErro.present();
+      return;
+    }
+
+    if (this.dataConsulta && this.dataConsulta < this.dataMinima) {
+      const toastErro = await this.toastCtrl.create({
+        message: 'A data da consulta não pode ser anterior a hoje.',
+        duration: 2000,
+        position: 'top',
+        color: 'warning',
       });
       await toastErro.present();
       return;
