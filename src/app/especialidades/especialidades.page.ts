@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';           // 👈 importa o Router
 import { lista_especialidades } from './especialidades-dados';
 import { Especialidade } from '../_logica/entidades/Especialidades';
 
@@ -15,7 +16,7 @@ export class EspecialidadesPage  {
 
   termoBusca = '';
 
-  constructor() {
+  constructor(private router: Router) {            
     this.especialidades = lista_especialidades;
     this.especialidadesFiltradas = this.especialidades;
   }
@@ -34,6 +35,10 @@ export class EspecialidadesPage  {
   }
 
   abrir(esp: Especialidade) {
-    console.log('Especialidade selecionada:', esp);
+    const nomeEspecialidade = esp.getNome(); 
+
+    this.router.navigate(['/tabs/medicos'], {
+      queryParams: { especialidade: nomeEspecialidade }
+    });
   }
 }
