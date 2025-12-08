@@ -41,8 +41,6 @@ export class AgendarConsultaPage {
   dataConsulta: string | null = null;
   horarioConsulta: string | null = null;
 
-  dataMinima: string = new Date().toISOString().split('T')[0];
-
   consultas: Consulta[] = [];
 
   private cadastroCRUD: CadastroCRUD;
@@ -59,7 +57,7 @@ export class AgendarConsultaPage {
     this.iniciar();
   }
 
-  async iniciar() {
+  private async iniciar() {
     await this.storage.create();
     await this.cadastroCRUD.inicializar();
     await this.carregarConsultas();
@@ -77,7 +75,27 @@ export class AgendarConsultaPage {
     this.especialidades = lista;
   }
 
-  buscarConsulta() {
+  limparDados() {
+    this.especialidadeSelecionada = null;
+    this.medicoSelecionado = null;
+    this.dataConsulta = null;
+    this.horarioConsulta = null;
+    this.medicosFiltrados = [...this.medicos];
+
+    if (this.consultaPara === 'outro') {
+      this.paciente = {
+        nome: '',
+        cpf: '',
+        cep: '',
+        genero: '',
+        dataNascimento: ''
+      };
+    }
+  }
+
+  private limparFormulario(): void {
+    this.consultaPara = 'mim';
+
     this.paciente = {
       nome: '',
       cpf: '',
@@ -85,6 +103,13 @@ export class AgendarConsultaPage {
       genero: '',
       dataNascimento: ''
     };
+
+    this.especialidadeSelecionada = null;
+    this.medicoSelecionado = null;
+    this.dataConsulta = null;
+    this.horarioConsulta = null;
+
+    this.medicosFiltrados = [...this.medicos];
   }
 
   buscarEspecialidade() {
@@ -163,7 +188,7 @@ export class AgendarConsultaPage {
   }
 
   // --- Máscaras ---
-  maskCPF(event: any) {
+  mascaraCPF(event: any) {
     let value: string = event.detail.value || '';
 
     value = value.replace(/\D/g, '');
@@ -183,23 +208,7 @@ export class AgendarConsultaPage {
     this.paciente.cpf = value;
   }
 
-  maskCEP(event: any) {
-    let value: string = event.detail.value || '';
-
-    value = value.replace(/\D/g, '');
-
-    if (value.length > 8) {
-      value = value.substring(0, 8);
-    }
-
-    if (value.length > 5) {
-      value = value.replace(/(\d{5})(\d+)/, '$1-$2');
-    }
-
-    this.paciente.cep = value;
-  }
-
-  maskDataNascimento(event: any) {
+  mascaraDtNasc(event: any) {
     let value: string = event.detail.value || '';
 
     value = value.replace(/\D/g, '');
@@ -237,7 +246,7 @@ export class AgendarConsultaPage {
 
   private async obterDadosPacienteParaConsulta() {
     if (this.consultaPara === 'mim') {
-      const cpfLogado = await this.storage.get('cpfLogado');
+      const cpfLogado = await this.obterCpfUsuarioLogado();
 
       if (cpfLogado) {
         const cadastro = await this.cadastroCRUD.obterCadastroPorCpf(cpfLogado);
@@ -262,18 +271,13 @@ export class AgendarConsultaPage {
     return cpfLogado || '';
   }
 
-  async validarData() {
-    if (this.dataConsulta && this.dataConsulta < this.dataMinima) {
-      const toast = await this.toastCtrl.create({
-        message: 'A data da consulta não pode ser anterior a hoje.',
-        duration: 2000,
-        position: 'top',
-        color: 'warning'
-      });
-      await toast.present();
+  private getdataAtual(): string {
+    const hoje = new Date();
+    const ano = hoje.getFullYear();
+    const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+    const dia = String(hoje.getDate()).padStart(2, '0');
 
-      this.dataConsulta = null; // Limpa o campo
-    }
+    return `${ano}-${mes}-${dia}`;
   }
 
   async confirmarAgendamento() {
@@ -288,7 +292,20 @@ export class AgendarConsultaPage {
       return;
     }
 
-    if (this.dataConsulta && this.dataConsulta < this.dataMinima) {
+    if (!this.dataConsulta) {
+      const toastErro = await this.toastCtrl.create({
+        message: 'Selecione a data da consulta.',
+        duration: 2000,
+        position: 'top',
+        color: 'warning',
+      });
+      await toastErro.present();
+      return;
+    }
+
+    const dataAtual = this.getdataAtual();
+
+    if (this.dataConsulta < dataAtual) {
       const toastErro = await this.toastCtrl.create({
         message: 'A data da consulta não pode ser anterior a hoje.',
         duration: 2000,
@@ -320,6 +337,8 @@ export class AgendarConsultaPage {
     this.consultas.push(novaConsulta);
     await this.salvarConsultas();
 
+    this.limparFormulario();
+
     const toast = await this.toastCtrl.create({
       message: 'Consulta confirmada!',
       duration: 1500,
@@ -328,27 +347,7 @@ export class AgendarConsultaPage {
     });
     await toast.present();
 
-    console.log('Consulta agendada:', {
-      consultaPara: novaConsulta.getConsultaPara(),
-      paciente: {
-        nome: novaConsulta.getNomePaciente(),
-        cpf: novaConsulta.getCpfPaciente(),
-        cep: novaConsulta.getCepPaciente(),
-        genero: novaConsulta.getGeneroPaciente(),
-        dataNascimento: novaConsulta.getDataNascimentoPaciente(),
-      },
-      consulta: {
-        especialidade: novaConsulta.getEspecialidade(),
-        medico: novaConsulta.getMedico(),
-        dataConsulta: novaConsulta.getDataConsulta(),
-        horarioConsulta: novaConsulta.getHorarioConsulta(),
-      },
-      usuarioResponsavel: cpfUsuario,
-    });
-
-    this.router.navigate(['/tabs/consulta']).then(() => {
-      window.location.reload();
-    });
+    this.router.navigate(['/tabs/consulta']);
   }
 
 }

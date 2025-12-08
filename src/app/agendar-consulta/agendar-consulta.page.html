@@ -10,7 +10,6 @@
   <div class="container-pagina">
     <div class="card-formulario">
 
-      <!-- Card topo -->
       <ion-card class="card-info">
         <ion-card-content class="card-info-conteudo">
           <div class="card-info-icone">
@@ -24,7 +23,6 @@
         </ion-card-content>
       </ion-card>
 
-      <!-- Para quem é a consulta -->
       <section class="paciente-consulta">
         <label class="paciente-consulta-rotulo">
           <ion-icon name="people-outline"></ion-icon>
@@ -33,14 +31,13 @@
 
         <ion-item class="paciente-consulta-item" lines="none">
           <ion-select interface="popover" placeholder="Selecione" [(ngModel)]="consultaPara"
-            (ionChange)="buscarConsulta()">
+            (ionChange)="limparDados()">
             <ion-select-option value="mim">Para mim</ion-select-option>
             <ion-select-option value="outro">Outra pessoa</ion-select-option>
           </ion-select>
         </ion-item>
       </section>
 
-      <!-- Bloco paciente (aparece se for outra pessoa) -->
       <div class="bloco-outra-pessoa" *ngIf="consultaPara === 'outro'">
 
         <section class="paciente-consulta">
@@ -62,8 +59,8 @@
           </label>
 
           <ion-item class="paciente-consulta-item" lines="none">
-            <ion-input placeholder="000.000.000-00" type="text" [(ngModel)]="paciente.cpf" (ionInput)="maskCPF($event)"
-              maxlength="14">
+            <ion-input placeholder="000.000.000-00" type="text" [(ngModel)]="paciente.cpf"
+              (ionInput)="mascaraCPF($event)" maxlength="14">
             </ion-input>
           </ion-item>
         </section>
@@ -76,7 +73,7 @@
 
           <ion-item class="paciente-consulta-item" lines="none">
             <ion-input placeholder="DD/MM/AAAA" [(ngModel)]="paciente.dataNascimento"
-              (ionInput)="maskDataNascimento($event)">
+              (ionInput)="mascaraDtNasc($event)">
             </ion-input>
           </ion-item>
         </section>
@@ -99,7 +96,6 @@
 
       </div>
 
-      <!-- Especialidade -->
       <section class="paciente-consulta">
         <label class="paciente-consulta-rotulo">
           <ion-icon name="bandage-outline"></ion-icon>
@@ -116,7 +112,6 @@
         </ion-item>
       </section>
 
-      <!-- Médico -->
       <section class="paciente-consulta">
         <label class="paciente-consulta-rotulo">
           <ion-icon name="person-outline"></ion-icon>
@@ -133,7 +128,6 @@
         </ion-item>
       </section>
 
-      <!-- Data da consulta -->
       <section class="paciente-consulta">
         <label class="paciente-consulta-rotulo">
           <ion-icon name="calendar-outline"></ion-icon>
@@ -141,12 +135,10 @@
         </label>
 
         <ion-item class="paciente-consulta-item" lines="none">
-          <ion-input type="date" [(ngModel)]="dataConsulta" (ionChange)="validarData()">
-          </ion-input>
+          <ion-input type="date" [(ngModel)]="dataConsulta"></ion-input>
         </ion-item>
       </section>
 
-      <!-- Horário da consulta (ion-select) -->
       <section class="paciente-consulta">
         <label class="paciente-consulta-rotulo">
           <ion-icon name="time-outline"></ion-icon>
@@ -162,7 +154,6 @@
         </ion-item>
       </section>
 
-      <!-- Botão -->
       <ion-button class="botao-confirmar" expand="block" shape="round" [disabled]="!formularioValido"
         (click)="confirmarAgendamento()">
         Agendar
