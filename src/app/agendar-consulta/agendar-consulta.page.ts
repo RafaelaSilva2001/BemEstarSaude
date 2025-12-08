@@ -41,7 +41,7 @@ export class AgendarConsultaPage {
   dataConsulta: string | null = null;
   horarioConsulta: string | null = null;
 
-  dataMinima: string = new Date().toISOString().split('T')[0];
+  dataMinima: string = new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().split('T')[0];
 
   consultas: Consulta[] = [];
 
