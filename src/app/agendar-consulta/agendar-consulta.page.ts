@@ -41,11 +41,6 @@ export class AgendarConsultaPage {
   dataConsulta: string | null = null;
   horarioConsulta: string | null = null;
 
-<<<<<<< HEAD
-=======
-  dataMinima: string = new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().split('T')[0];
-
->>>>>>> dabf4577e6e67da2b83b7c7b2e8c21e9ea35893b
   consultas: Consulta[] = [];
 
   private cadastroCRUD: CadastroCRUD;
