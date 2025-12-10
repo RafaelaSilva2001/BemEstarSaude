@@ -24,8 +24,7 @@ export class ConsultaPage {
   private consultaCRUD: ConsultaCRUD;
   private cadastroCRUD: CadastroCRUD;
 
-  constructor( private storage: Storage, private alertCtrl: AlertController) 
-  {
+  constructor(private storage: Storage, private alertCtrl: AlertController) {
     this.consultaCRUD = new ConsultaCRUD(this.storage);
     this.cadastroCRUD = new CadastroCRUD(this.storage);
   }
@@ -53,45 +52,30 @@ export class ConsultaPage {
 
     this.usuarioLogado = await this.cadastroCRUD.obterCadastroPorCpf(cpfLogado);
 
-    // Carrega TODAS as consultas do storage
     this.consultas = await this.consultaCRUD.obterConsultas();
 
-    // Filtra as consultas feitas pelo usuário e separa em "minhas" e "outras"
     this.filtrarConsultas(cpfLogado);
   }
 
-  // -----------------------------------------
-  // Filtro:
-  // 1) pega só consultas que o usuário FEZ (cpfUsuario = cpfLogado)
-  // 2) dentro dessas, separa:
-  //    - MINHAS: cpfPaciente = cpfLogado
-  //    - OUTRAS: cpfPaciente != cpfLogado
-  // -----------------------------------------
   private filtrarConsultas(cpfLogado: string) {
-    const cpfBase = cpfLogado.replace(/\D/g, ''); // só dígitos
+    const cpfBase = cpfLogado.replace(/\D/g, '');
 
-    // primeiro, pega apenas consultas feitas pelo usuário logado
     const consultasDoUsuario = this.consultas.filter((c) => {
       const cpfUsuario = (c.getCpfUsuario() || '').replace(/\D/g, '');
       return cpfUsuario === cpfBase;
     });
 
-    // MINHAS CONSULTAS: paciente é o próprio usuário
     this.minhasConsultas = consultasDoUsuario.filter((c) => {
       const cpfPaciente = (c.getCpfPaciente() || '').replace(/\D/g, '');
       return cpfPaciente === cpfBase;
     });
 
-    // OUTRAS CONSULTAS: paciente é outra pessoa (mãe, pai, filho, etc.)
     this.outrasConsultas = consultasDoUsuario.filter((c) => {
       const cpfPaciente = (c.getCpfPaciente() || '').replace(/\D/g, '');
       return cpfPaciente !== cpfBase;
     });
   }
 
-  // -----------------------------------------
-  // Formatação de data
-  // -----------------------------------------
   formatarDataConsulta(data: string | null): string {
     if (!data) return '';
 
@@ -108,9 +92,6 @@ export class ConsultaPage {
     return data;
   }
 
-  // -----------------------------------------
-  // Gravar consultas no storage
-  // -----------------------------------------
   private async salvarConsultasNoStorage(): Promise<void> {
     const dados: any[] = [];
 
@@ -134,9 +115,6 @@ export class ConsultaPage {
     await this.storage.set('consultas', dados);
   }
 
-  // -----------------------------------------
-  // Cancelar consulta
-  // -----------------------------------------
   async confirmarCancelamento(consulta: Consulta) {
     const alert = await this.alertCtrl.create({
       header: 'Cancelar consulta',
@@ -166,9 +144,6 @@ export class ConsultaPage {
     }
   }
 
-  // -----------------------------------------
-  // Excluir consulta
-  // -----------------------------------------
   async confirmarExclusao(consulta: Consulta) {
     const alert = await this.alertCtrl.create({
       header: 'Excluir consulta',

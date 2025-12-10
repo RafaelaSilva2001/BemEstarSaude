@@ -9,7 +9,7 @@
 
 .card-destaque {
   background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
-  padding: 24px 20px 40px; 
+  padding: 24px 20px 40px;
   border-bottom-left-radius: 32px;
   border-bottom-right-radius: 32px;
   color: #fff;
@@ -50,7 +50,7 @@
 
   ion-spinner {
     color: #1e88e5;
-    transform: scale(1); 
+    transform: scale(1);
   }
 
   p {
@@ -61,7 +61,7 @@
 
 .sem-consultas {
   text-align: center;
-  font-size: 0.9rem; 
+  font-size: 0.9rem;
   color: #64748b;
   margin-top: 40px;
   padding: 0 24px;
@@ -71,13 +71,13 @@
 .lista-consultas {
   display: flex;
   flex-direction: column;
-  gap: 12px; 
+  gap: 12px;
   padding: 0 20px;
 }
 
 .card-consulta {
   margin: 0;
-  border-radius: 16px; 
+  border-radius: 16px;
   box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.08);
   background: #ffffff;
   border: 1px solid #f1f5f9;
@@ -92,7 +92,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px; 
+  margin-bottom: 12px;
 }
 
 .acoes-consulta {
@@ -106,7 +106,7 @@
   margin: 0;
   --padding-start: 6px;
   --padding-end: 6px;
-  height: 28px; 
+  height: 28px;
   --border-radius: 6px;
 }
 
@@ -114,7 +114,7 @@
   color: #f59e0b;
 
   ion-icon {
-    font-size: 20px; 
+    font-size: 20px;
   }
 }
 
@@ -129,9 +129,9 @@
 .selo-consulta {
   display: inline-flex;
   align-items: center;
-  padding: 3px 10px; 
+  padding: 3px 10px;
   border-radius: 20px;
-  font-size: 0.65rem; 
+  font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.3px;
 }
@@ -147,7 +147,7 @@
 }
 
 .consulta-especialidade {
-  font-size: 1rem; 
+  font-size: 1rem;
   font-weight: 700;
   color: #1e293b;
   margin: 0 0 4px;
@@ -169,7 +169,7 @@
   border-radius: 10px;
   margin-bottom: 12px;
   color: #475569;
-  font-size: 0.75rem; 
+  font-size: 0.75rem;
   font-weight: 500;
 
   div {
@@ -180,7 +180,7 @@
 
   ion-icon {
     color: #3b82f6;
-    font-size: 16px; 
+    font-size: 16px;
   }
 }
 
@@ -189,7 +189,7 @@
   padding-top: 10px;
 
   p {
-    font-size: 0.75rem; 
+    font-size: 0.75rem;
     color: #64748b;
     margin: 0;
   }
