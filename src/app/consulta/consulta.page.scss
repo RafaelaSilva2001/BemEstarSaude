@@ -40,25 +40,6 @@
   letter-spacing: 0.5px;
 }
 
-.container-carregando {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  margin-top: 40px;
-  color: #64748b;
-
-  ion-spinner {
-    color: #1e88e5;
-    transform: scale(1);
-  }
-
-  p {
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
-}
-
 .sem-consultas {
   text-align: center;
   font-size: 0.9rem;
