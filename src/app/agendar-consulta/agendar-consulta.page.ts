@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage-angular';
 import { Consulta } from '../_logica/entidades/Consulta';
 import { Router } from '@angular/router';
 import { CadastroCRUD } from '../_logica/persistencia/CadastroCRUD';
+import { ConsultaCRUD } from '../_logica/persistencia/ConsultaCRUD';
 
 @Component({
   selector: 'app-agendar-consulta',
@@ -41,9 +42,8 @@ export class AgendarConsultaPage {
   dataConsulta: string | null = null;
   horarioConsulta: string | null = null;
 
-  consultas: Consulta[] = [];
-
   private cadastroCRUD: CadastroCRUD;
+  private consultaCRUD: ConsultaCRUD;
 
   constructor(
     private toastCtrl: ToastController,
@@ -51,6 +51,7 @@ export class AgendarConsultaPage {
     private router: Router
   ) {
     this.cadastroCRUD = new CadastroCRUD(this.storage);
+    this.consultaCRUD = new ConsultaCRUD(this.storage);
 
     this.preencherEspecialidades();
     this.medicosFiltrados = [...this.medicos];
@@ -60,7 +61,7 @@ export class AgendarConsultaPage {
   private async iniciar() {
     await this.storage.create();
     await this.cadastroCRUD.inicializar();
-    await this.carregarConsultas();
+    await this.consultaCRUD.inicializar();
   }
 
   preencherEspecialidades() {
@@ -129,62 +130,6 @@ export class AgendarConsultaPage {
     }
 
     this.medicosFiltrados = filtrados;
-  }
-
-  private async carregarConsultas(): Promise<void> {
-    const salvo: any[] = await this.storage.get('consultas');
-
-    this.consultas = [];
-
-    if (salvo && salvo.length > 0) {
-      for (const c of salvo) {
-
-        const status: 'Agendada' | 'Cancelada' =
-          c.status === 'Cancelada' ? 'Cancelada' : 'Agendada';
-
-        const consulta = new Consulta(
-          c.consultaPara,
-          c.nomePaciente,
-          c.cpfPaciente,
-          c.cepPaciente,
-          c.generoPaciente,
-          c.dataNascimentoPaciente,
-          c.especialidade,
-          c.medico,
-          c.dataConsulta,
-          c.horarioConsulta,
-          status,
-          c.cpfUsuario
-        );
-
-        this.consultas.push(consulta);
-      }
-    }
-  }
-
-  private async salvarConsultas(): Promise<void> {
-    const dados: any[] = [];
-
-    for (const c of this.consultas) {
-      const obj = {
-        consultaPara: c.getConsultaPara(),
-        nomePaciente: c.getNomePaciente(),
-        cpfPaciente: c.getCpfPaciente(),
-        cepPaciente: c.getCepPaciente(),
-        generoPaciente: c.getGeneroPaciente(),
-        dataNascimentoPaciente: c.getDataNascimentoPaciente(),
-        especialidade: c.getEspecialidade(),
-        medico: c.getMedico(),
-        dataConsulta: c.getDataConsulta(),
-        horarioConsulta: c.getHorarioConsulta(),
-        status: c.getStatus(),
-        cpfUsuario: c.getCpfUsuario(),
-      };
-
-      dados.push(obj);
-    }
-
-    await this.storage.set('consultas', dados);
   }
 
   // --- Máscaras ---
@@ -280,6 +225,7 @@ export class AgendarConsultaPage {
     return `${ano}-${mes}-${dia}`;
   }
 
+
   async confirmarAgendamento() {
     if (!this.formularioValido) {
       const toastErro = await this.toastCtrl.create({
@@ -333,9 +279,7 @@ export class AgendarConsultaPage {
       'Agendada',
       cpfUsuario
     );
-
-    this.consultas.push(novaConsulta);
-    await this.salvarConsultas();
+    await this.consultaCRUD.salvarNovaConsulta(novaConsulta);
 
     this.limparFormulario();
 

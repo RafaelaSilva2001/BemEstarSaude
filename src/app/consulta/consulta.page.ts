@@ -24,7 +24,10 @@ export class ConsultaPage {
   private consultaCRUD: ConsultaCRUD;
   private cadastroCRUD: CadastroCRUD;
 
-  constructor(private storage: Storage, private alertCtrl: AlertController) {
+  constructor(
+    private storage: Storage,
+    private alertCtrl: AlertController
+  ) {
     this.consultaCRUD = new ConsultaCRUD(this.storage);
     this.cadastroCRUD = new CadastroCRUD(this.storage);
   }
@@ -42,7 +45,6 @@ export class ConsultaPage {
     const cpfLogado: string | null = await this.storage.get('cpfLogado');
 
     if (!cpfLogado) {
-      console.log('Nenhum CPF logado. Não é possível carregar o relatório.');
       this.usuarioLogado = null;
       this.consultas = [];
       this.minhasConsultas = [];
@@ -92,29 +94,6 @@ export class ConsultaPage {
     return data;
   }
 
-  private async salvarConsultasNoStorage(): Promise<void> {
-    const dados: any[] = [];
-
-    for (const c of this.consultas) {
-      dados.push({
-        consultaPara: c.getConsultaPara(),
-        nomePaciente: c.getNomePaciente(),
-        cpfPaciente: c.getCpfPaciente(),
-        cepPaciente: c.getCepPaciente(),
-        generoPaciente: c.getGeneroPaciente(),
-        dataNascimentoPaciente: c.getDataNascimentoPaciente(),
-        especialidade: c.getEspecialidade(),
-        medico: c.getMedico(),
-        dataConsulta: c.getDataConsulta(),
-        horarioConsulta: c.getHorarioConsulta(),
-        status: c.getStatus ? c.getStatus() : 'Agendada',
-        cpfUsuario: c.getCpfUsuario(),
-      });
-    }
-
-    await this.storage.set('consultas', dados);
-  }
-
   async confirmarCancelamento(consulta: Consulta) {
     const alert = await this.alertCtrl.create({
       header: 'Cancelar consulta',
@@ -136,7 +115,8 @@ export class ConsultaPage {
 
   private async cancelarConsulta(consulta: Consulta) {
     consulta.setStatus('Cancelada');
-    await this.salvarConsultasNoStorage();
+
+    await this.consultaCRUD.salvarAlteracoes();
 
     const cpfLogado: string | null = await this.storage.get('cpfLogado');
     if (cpfLogado) {
@@ -164,9 +144,9 @@ export class ConsultaPage {
   }
 
   private async excluirConsulta(consulta: Consulta) {
-    this.consultas = this.consultas.filter(c => c !== consulta);
+    await this.consultaCRUD.removerConsulta(consulta);
 
-    await this.salvarConsultasNoStorage();
+    this.consultas = await this.consultaCRUD.obterConsultas();
 
     const cpfLogado: string | null = await this.storage.get('cpfLogado');
     if (cpfLogado) {
